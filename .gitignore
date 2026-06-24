@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.env
+*.log
+
+# Excel 자동 백업 파일
+sample_data/*_backup_*.xlsx
