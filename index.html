@@ -3,143 +3,136 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI & 물류 자동화 뉴스</title>
+<title>물류 · 자동화 뉴스</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    background: #0f172a;
-    color: #e2e8f0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
     min-height: 100vh;
   }
 
-  /* Header */
   header {
     position: sticky; top: 0; z-index: 10;
-    background: rgba(15,23,42,0.95);
+    background: rgba(255,255,255,0.95);
     backdrop-filter: blur(8px);
-    border-bottom: 1px solid rgba(255,255,255,0.07);
+    border-bottom: 1px solid #e2e8f0;
     padding: 14px 24px;
     display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
   }
   .logo { display: flex; align-items: center; gap: 10px; }
   .logo-icon {
     width: 34px; height: 34px; border-radius: 8px;
-    background: linear-gradient(135deg, #7c3aed, #2563eb);
+    background: linear-gradient(135deg, #2563eb, #0ea5e9);
     display: flex; align-items: center; justify-content: center; font-size: 16px;
   }
-  .logo-title { font-size: 15px; font-weight: 700; color: #f1f5f9; }
-  .logo-sub { font-size: 11px; color: #64748b; margin-top: 2px; }
-  .live-badge { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #94a3b8; }
-  .dot {
-    width: 8px; height: 8px; border-radius: 50%; background: #34d399;
-    animation: pulse 2s infinite;
-  }
+  .logo-title { font-size: 15px; font-weight: 700; color: #0f172a; }
+  .logo-sub { font-size: 11px; color: #94a3b8; margin-top: 2px; }
+  .live-badge { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #64748b; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
-  /* Hero */
   .hero {
-    background: linear-gradient(180deg, rgba(30,41,59,0.5) 0%, transparent 100%);
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    padding: 32px 24px 24px;
-    max-width: 1200px; margin: 0 auto;
+    background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 100%);
+    border-bottom: 1px solid #dbeafe;
+    padding: 28px 24px 22px;
   }
-  .hero h2 { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
-  .hero p { font-size: 13px; color: #94a3b8; }
+  .hero-inner { max-width: 1200px; margin: 0 auto; }
+  .hero h2 { font-size: 22px; font-weight: 700; color: #0f172a; margin-bottom: 5px; }
+  .hero p { font-size: 13px; color: #64748b; }
 
-  /* Controls */
-  .controls {
-    max-width: 1200px; margin: 0 auto;
-    padding: 20px 24px 0;
-  }
-  .search-wrap { position: relative; margin-bottom: 14px; }
-  .search-wrap span {
-    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
-    font-size: 14px; color: #64748b;
-  }
+  .controls { max-width: 1200px; margin: 0 auto; padding: 18px 24px 0; }
+  .search-wrap { position: relative; margin-bottom: 12px; }
+  .search-wrap span { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); font-size: 13px; color: #94a3b8; }
   .search-input {
-    width: 100%; padding: 11px 16px 11px 40px;
-    background: rgba(30,41,59,0.6); border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px; color: #e2e8f0; font-size: 13px;
-    outline: none; transition: border-color 0.2s, background 0.2s;
+    width: 100%; padding: 10px 16px 10px 36px;
+    background: #fff; border: 1px solid #e2e8f0;
+    border-radius: 10px; color: #1e293b; font-size: 13px;
+    outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
   }
-  .search-input::placeholder { color: #475569; }
-  .search-input:focus { border-color: rgba(124,58,237,0.5); background: rgba(30,41,59,0.9); }
+  .search-input::placeholder { color: #cbd5e1; }
+  .search-input:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
 
   .tabs { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
   .tab {
     display: flex; align-items: center; gap: 5px;
-    padding: 8px 16px; border-radius: 999px; font-size: 13px; font-weight: 500;
-    border: 1px solid rgba(255,255,255,0.08); background: rgba(30,41,59,0.6);
-    color: #94a3b8; cursor: pointer; transition: all 0.2s;
+    padding: 7px 14px; border-radius: 999px; font-size: 13px; font-weight: 500;
+    border: 1px solid #e2e8f0; background: #fff;
+    color: #64748b; cursor: pointer; transition: all 0.15s;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
   }
-  .tab:hover { background: rgba(51,65,85,0.7); color: #e2e8f0; }
-  .tab.active { background: #7c3aed; border-color: #7c3aed; color: #fff; box-shadow: 0 4px 14px rgba(124,58,237,0.3); }
+  .tab:hover { border-color: #93c5fd; color: #2563eb; background: #eff6ff; }
+  .tab.active { background: #2563eb; border-color: #2563eb; color: #fff; box-shadow: 0 2px 8px rgba(37,99,235,0.3); }
   .tab-refresh { margin-left: auto; }
-  .tab-refresh:hover { background: rgba(51,65,85,0.7); color: #e2e8f0; }
+  .tab-refresh:hover { border-color: #86efac; color: #16a34a; background: #f0fdf4; }
 
-  /* Status */
   .status-bar {
     max-width: 1200px; margin: 10px auto 0;
-    padding: 0 24px; font-size: 11px; color: #475569;
+    padding: 0 24px; font-size: 11px; color: #94a3b8;
   }
 
-  /* Grid */
   .grid {
-    max-width: 1200px; margin: 16px auto 0;
-    padding: 0 24px 40px;
+    max-width: 1200px; margin: 14px auto 0;
+    padding: 0 24px 48px;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 14px;
   }
 
-  /* Card */
   .card {
-    background: rgba(30,41,59,0.6); border: 1px solid rgba(255,255,255,0.07);
+    background: #fff; border: 1px solid #e2e8f0;
     border-radius: 14px; padding: 18px;
-    text-decoration: none; color: inherit;
     display: flex; flex-direction: column; gap: 10px;
-    transition: background 0.2s, border-color 0.2s, transform 0.15s;
-    cursor: pointer;
+    transition: box-shadow 0.2s, transform 0.15s, border-color 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
   }
-  .card:hover {
-    background: rgba(51,65,85,0.7); border-color: rgba(255,255,255,0.15);
-    transform: translateY(-2px);
-  }
+  .card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); transform: translateY(-2px); border-color: #bfdbfe; }
+
   .card-top { display: flex; justify-content: space-between; align-items: center; }
-  .badge {
-    font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 999px;
-  }
-  .badge-ai { background: rgba(124,58,237,0.2); color: #a78bfa; border: 1px solid rgba(124,58,237,0.3); }
-  .badge-logistics { background: rgba(37,99,235,0.2); color: #93c5fd; border: 1px solid rgba(37,99,235,0.3); }
-  .badge-automation { background: rgba(5,150,105,0.2); color: #6ee7b7; border: 1px solid rgba(5,150,105,0.3); }
-  .time { font-size: 11px; color: #475569; }
+  .badge { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 999px; }
+  .badge-logistics { background: #dbeafe; color: #1d4ed8; }
+  .badge-automation { background: #dcfce7; color: #15803d; }
+  .badge-ai { background: #f3e8ff; color: #7e22ce; }
+  .time { font-size: 11px; color: #94a3b8; }
+
   .card-title {
-    font-size: 13px; font-weight: 600; line-height: 1.5; color: #f1f5f9;
+    font-size: 13px; font-weight: 600; line-height: 1.55; color: #0f172a;
     display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
   }
   .card-summary {
-    font-size: 12px; color: #64748b; line-height: 1.6;
-    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    font-size: 12px; color: #64748b; line-height: 1.65;
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
   }
-  .card-source { font-size: 11px; color: #475569; display: flex; align-items: center; gap: 5px; }
-  .card-source::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: #334155; display: inline-block; }
+  .card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 2px; }
+  .card-source { font-size: 11px; color: #94a3b8; display: flex; align-items: center; gap: 5px; }
+  .card-source::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: #cbd5e1; display: inline-block; }
+  .card-link {
+    font-size: 11px; font-weight: 500; color: #2563eb;
+    text-decoration: none; display: flex; align-items: center; gap: 3px;
+    padding: 3px 8px; border-radius: 6px; border: 1px solid #bfdbfe;
+    transition: background 0.15s;
+  }
+  .card-link:hover { background: #eff6ff; }
 
   /* Skeleton */
-  .skeleton { background: rgba(30,41,59,0.5); border: 1px solid rgba(255,255,255,0.05); border-radius: 14px; padding: 18px; }
-  .skel-line { background: rgba(51,65,85,0.8); border-radius: 6px; animation: shimmer 1.5s infinite; }
-  @keyframes shimmer { 0%,100%{opacity:0.5} 50%{opacity:1} }
+  .skeleton { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 18px; }
+  .skel-line { background: #f1f5f9; border-radius: 6px; animation: shimmer 1.4s infinite; }
+  @keyframes shimmer { 0%,100%{opacity:0.6} 50%{opacity:1} }
 
-  /* Empty */
-  .empty { grid-column: 1/-1; text-align: center; padding: 60px 0; color: #475569; }
+  .empty { grid-column: 1/-1; text-align: center; padding: 60px 0; color: #94a3b8; }
   .empty .icon { font-size: 40px; margin-bottom: 10px; }
 
-  /* Footer */
+  .translating { color: #94a3b8; font-style: italic; }
+
   footer {
-    border-top: 1px solid rgba(255,255,255,0.05);
-    text-align: center; padding: 20px;
-    font-size: 11px; color: #334155;
+    border-top: 1px solid #e2e8f0;
+    text-align: center; padding: 18px;
+    font-size: 11px; color: #cbd5e1;
+    background: #fff;
   }
 </style>
 </head>
@@ -147,18 +140,20 @@
 
 <header>
   <div class="logo">
-    <div class="logo-icon">🤖</div>
+    <div class="logo-icon">🚚</div>
     <div>
-      <div class="logo-title">AI & 물류 자동화</div>
-      <div class="logo-sub">실시간 뉴스 피드</div>
+      <div class="logo-title">물류 · 자동화 뉴스</div>
+      <div class="logo-sub">AI 물류·자동화 전문 피드</div>
     </div>
   </div>
   <div class="live-badge"><span class="dot"></span> 자동 업데이트</div>
 </header>
 
 <div class="hero">
-  <h2>AI · 물류 · 자동화 최신 소식</h2>
-  <p>인공지능, 공급망, 물류 자동화 분야의 글로벌 뉴스를 페이지 열 때마다 자동으로 수집합니다</p>
+  <div class="hero-inner">
+    <h2>물류 · 공급망 · 자동화 최신 소식</h2>
+    <p>물류, 공급망, 제조 자동화 분야의 글로벌 뉴스를 한국어로 번역하여 제공합니다 · 30분 캐시</p>
+  </div>
 </div>
 
 <div class="controls">
@@ -168,9 +163,9 @@
   </div>
   <div class="tabs">
     <button class="tab active" onclick="setCategory('all', this)">📰 전체</button>
-    <button class="tab" onclick="setCategory('ai', this)">🤖 AI</button>
     <button class="tab" onclick="setCategory('logistics', this)">🚚 물류</button>
     <button class="tab" onclick="setCategory('automation', this)">⚙️ 자동화</button>
+    <button class="tab" onclick="setCategory('ai', this)">🤖 AI 물류</button>
     <button class="tab tab-refresh" onclick="loadNews(true)">🔄 새로고침</button>
   </div>
 </div>
@@ -178,52 +173,70 @@
 <div class="status-bar" id="statusBar"></div>
 <div class="grid" id="grid"></div>
 
-<footer>AI & 물류 자동화 뉴스 · 뉴스는 외부 RSS 피드에서 자동 수집됩니다</footer>
+<footer>물류 · 자동화 뉴스 · 뉴스는 외부 RSS 피드에서 자동 수집 및 번역됩니다</footer>
 
 <script>
+// 물류·자동화에 특화된 RSS 피드만 사용
 const FEEDS = [
-  { url: 'https://techcrunch.com/category/artificial-intelligence/feed/', source: 'TechCrunch AI', category: 'ai' },
-  { url: 'https://feeds.feedburner.com/venturebeat/SZYF', source: 'VentureBeat AI', category: 'ai' },
-  { url: 'https://www.technologyreview.com/feed/', source: 'MIT Tech Review', category: 'ai' },
   { url: 'https://www.supplychaindive.com/feeds/news/', source: 'Supply Chain Dive', category: 'logistics' },
-  { url: 'https://www.logisticsmgmt.com/rss/news', source: 'Logistics Mgmt', category: 'logistics' },
+  { url: 'https://www.logisticsmgmt.com/rss/news', source: 'Logistics Management', category: 'logistics' },
+  { url: 'https://www.freightwaves.com/news/feed', source: 'FreightWaves', category: 'logistics' },
   { url: 'https://www.automationworld.com/rss.xml', source: 'Automation World', category: 'automation' },
+  { url: 'https://www.roboticsbusinessreview.com/feed/', source: 'Robotics Business Review', category: 'automation' },
+  { url: 'https://www.mhlnews.com/rss/all', source: 'MH&L News', category: 'automation' },
+  { url: 'https://feeds.feedburner.com/SupplyChainBrain', source: 'Supply Chain Brain', category: 'ai' },
+  { url: 'https://www.dcvelocity.com/rss/all_articles', source: 'DC Velocity', category: 'ai' },
 ];
 
 const MOCK = [
-  { title: 'OpenAI, 물류 최적화 AI 모델 출시 — 배송 시간 30% 단축 효과', summary: 'OpenAI가 공급망 및 물류 최적화에 특화된 새로운 AI 모델을 공개했습니다. 실시간 교통 데이터와 수요 예측을 결합해 배송 경로를 최적화합니다.', url: '#', source: 'AI News', category: 'ai', publishedAt: new Date().toISOString() },
-  { title: '아마존 물류센터, 자율주행 로봇 도입으로 피킹 효율 45% 향상', summary: '아마존이 최신 자율주행 로봇을 전국 물류센터에 배치하며 운영 효율성을 크게 높였습니다.', url: '#', source: 'Logistics Tech', category: 'logistics', publishedAt: new Date(Date.now()-3600000).toISOString() },
-  { title: '제조 자동화 시장 2030년까지 연평균 9.8% 성장 전망', summary: '글로벌 리서치 기관에 따르면 AI 기반 제조 자동화 시장이 폭발적으로 성장하고 있습니다.', url: '#', source: 'Automation World', category: 'automation', publishedAt: new Date(Date.now()-7200000).toISOString() },
-  { title: 'Google DeepMind, 창고 자동화를 위한 범용 로봇 AI 공개', summary: 'DeepMind의 새 로봇 AI는 다양한 물체를 인식하고 분류하는 데 있어 인간 수준의 정확도를 달성했습니다.', url: '#', source: 'MIT Tech Review', category: 'ai', publishedAt: new Date(Date.now()-10800000).toISOString() },
-  { title: '현대자동차, AI 기반 스마트 물류 플랫폼 "H-Logistics" 론칭', summary: '현대자동차그룹이 자체 개발한 AI 물류 플랫폼을 공개하며 부품 조달부터 완성차 배송까지 전 과정을 디지털화합니다.', url: '#', source: 'Supply Chain Dive', category: 'logistics', publishedAt: new Date(Date.now()-14400000).toISOString() },
-  { title: '드론 배송 자동화, 규제 완화로 국내 상용화 앞당겨질 전망', summary: '국토교통부가 도심 드론 배송 관련 규제를 대폭 완화하면서 CJ대한통운 등이 본격적인 서비스 확대를 준비 중입니다.', url: '#', source: 'Logistics Mgmt', category: 'automation', publishedAt: new Date(Date.now()-18000000).toISOString() },
+  { title: '아마존 물류센터, 자율주행 로봇 도입으로 피킹 효율 45% 향상', summary: '아마존이 최신 자율주행 로봇을 전국 물류센터에 배치하며 운영 효율성을 크게 높였습니다. AI 기반 경로 계획 알고리즘이 핵심입니다.', url: 'https://www.supplychaindive.com', source: 'Supply Chain Dive', category: 'logistics', publishedAt: new Date().toISOString() },
+  { title: '제조 자동화 시장 2030년까지 연평균 9.8% 성장 전망', summary: '글로벌 리서치 기관에 따르면 AI 기반 제조 자동화 시장이 폭발적으로 성장하고 있으며, 특히 한국과 일본 시장이 두드러집니다.', url: 'https://www.automationworld.com', source: 'Automation World', category: 'automation', publishedAt: new Date(Date.now()-3600000).toISOString() },
+  { title: '현대자동차, AI 기반 스마트 물류 플랫폼 "H-Logistics" 론칭', summary: '현대자동차그룹이 자체 개발한 AI 물류 플랫폼을 공개하며 부품 조달부터 완성차 배송까지 전 과정을 디지털화합니다.', url: 'https://www.mhlnews.com', source: 'MH&L News', category: 'ai', publishedAt: new Date(Date.now()-7200000).toISOString() },
+  { title: '드론 배송 자동화, 규제 완화로 국내 상용화 앞당겨질 전망', summary: '국토교통부가 도심 드론 배송 관련 규제를 대폭 완화하면서 CJ대한통운 등이 본격적인 서비스 확대를 준비 중입니다.', url: 'https://www.freightwaves.com', source: 'FreightWaves', category: 'logistics', publishedAt: new Date(Date.now()-10800000).toISOString() },
+  { title: '물류 로봇 시장, 2025년 전 세계 500억 달러 돌파 전망', summary: '창고 자동화 수요 급증으로 물류 로봇 시장이 빠르게 성장 중입니다. AMR(자율이동로봇)이 핵심 성장 동력입니다.', url: 'https://www.roboticsbusinessreview.com', source: 'Robotics Business Review', category: 'automation', publishedAt: new Date(Date.now()-14400000).toISOString() },
+  { title: 'AI 공급망 예측 솔루션, 재고 부족 사태 예방에 효과적', summary: '머신러닝 기반 수요 예측 솔루션을 도입한 기업들이 재고 비용을 평균 22% 절감했다는 연구 결과가 발표됐습니다.', url: 'https://www.dcvelocity.com', source: 'DC Velocity', category: 'ai', publishedAt: new Date(Date.now()-18000000).toISOString() },
 ];
 
 let allNews = [];
 let currentCategory = 'all';
 
-function timeAgo(dateStr) {
+function formatDate(dateStr) {
   const diff = Date.now() - new Date(dateStr).getTime();
-  const m = Math.floor(diff / 60000);
-  if (m < 60) return m + '분 전';
-  const h = Math.floor(m / 60);
-  if (h < 24) return h + '시간 전';
-  return Math.floor(h / 24) + '일 전';
+  const h = Math.floor(diff / 3600000);
+  if (h < 24) return h < 1 ? '방금 전' : h + '시간 전';
+  const d = new Date(dateStr);
+  return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
 }
 
 function stripHtml(html) {
-  return (html || '').replace(/<[^>]*>/g, '').replace(/&[a-z]+;/g, ' ').trim();
+  return (html || '').replace(/<[^>]*>/g, '').replace(/&[a-z#0-9]+;/gi, ' ').replace(/\s+/g, ' ').trim();
+}
+
+async function translate(text) {
+  if (!text || text.trim() === '') return text;
+  try {
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=ko&dt=t&q=${encodeURIComponent(text)}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    return data[0].map(s => s[0]).join('');
+  } catch {
+    return text;
+  }
 }
 
 function showSkeleton() {
   const grid = document.getElementById('grid');
   grid.innerHTML = Array.from({length: 6}).map(() => `
     <div class="skeleton">
-      <div class="skel-line" style="width:50px;height:18px;margin-bottom:12px"></div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:12px">
+        <div class="skel-line" style="width:48px;height:20px;border-radius:999px"></div>
+        <div class="skel-line" style="width:48px;height:14px"></div>
+      </div>
       <div class="skel-line" style="width:100%;height:14px;margin-bottom:6px"></div>
-      <div class="skel-line" style="width:80%;height:14px;margin-bottom:12px"></div>
-      <div class="skel-line" style="width:100%;height:11px;margin-bottom:4px"></div>
-      <div class="skel-line" style="width:65%;height:11px"></div>
+      <div class="skel-line" style="width:85%;height:14px;margin-bottom:12px"></div>
+      <div class="skel-line" style="width:100%;height:11px;margin-bottom:5px"></div>
+      <div class="skel-line" style="width:70%;height:11px;margin-bottom:14px"></div>
+      <div class="skel-line" style="width:55%;height:11px"></div>
     </div>
   `).join('');
 }
@@ -240,18 +253,23 @@ function renderCards() {
   }
 
   const badgeClass = { ai: 'badge-ai', logistics: 'badge-logistics', automation: 'badge-automation' };
-  const badgeLabel = { ai: 'AI', logistics: '물류', automation: '자동화' };
+  const badgeLabel = { ai: 'AI 물류', logistics: '물류', automation: '자동화' };
 
   grid.innerHTML = items.map(n => `
-    <a class="card" href="${n.url}" target="_blank" rel="noopener noreferrer">
+    <div class="card">
       <div class="card-top">
         <span class="badge ${badgeClass[n.category]}">${badgeLabel[n.category]}</span>
-        <span class="time">${timeAgo(n.publishedAt)}</span>
+        <span class="time">${formatDate(n.publishedAt)}</span>
       </div>
       <div class="card-title">${n.title}</div>
       ${n.summary ? `<div class="card-summary">${n.summary}</div>` : ''}
-      <div class="card-source">${n.source}</div>
-    </a>
+      <div class="card-footer">
+        <div class="card-source">${n.source}</div>
+        ${n.url && n.url !== '#'
+          ? `<a class="card-link" href="${n.url}" target="_blank" rel="noopener noreferrer">원문 보기 →</a>`
+          : ''}
+      </div>
+    </div>
   `).join('');
 }
 
@@ -263,24 +281,42 @@ function setCategory(cat, btn) {
 }
 
 async function fetchFeed(feed) {
-  const proxy = 'https://api.rss2json.com/v1/api.json?rss_url=';
-  const res = await fetch(proxy + encodeURIComponent(feed.url));
+  const res = await fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feed.url));
   const data = await res.json();
   if (data.status !== 'ok') return [];
-  return (data.items || []).slice(0, 10).map((item, i) => ({
-    id: feed.source + i,
+  return (data.items || []).slice(0, 8).map((item, i) => ({
+    id: feed.source + i + item.pubDate,
     title: item.title || '',
-    summary: stripHtml(item.description || item.content || '').slice(0, 200),
+    summary: stripHtml(item.description || item.content || '').slice(0, 300),
     url: item.link || '#',
     source: feed.source,
     category: feed.category,
     publishedAt: item.pubDate || new Date().toISOString(),
+    translated: false,
   }));
 }
 
+async function translateBatch(items) {
+  const BATCH = 5;
+  for (let i = 0; i < items.length; i += BATCH) {
+    const batch = items.slice(i, i + BATCH);
+    await Promise.all(batch.map(async (item) => {
+      if (item.translated) return;
+      const [title, summary] = await Promise.all([
+        translate(item.title),
+        translate(item.summary),
+      ]);
+      item.title = title;
+      item.summary = summary;
+      item.translated = true;
+    }));
+    renderCards();
+  }
+}
+
 async function loadNews(force = false) {
-  const CACHE_KEY = 'news_cache';
-  const CACHE_TS  = 'news_cache_ts';
+  const CACHE_KEY = 'logistics_news_v2';
+  const CACHE_TS  = 'logistics_news_ts_v2';
   const TTL = 30 * 60 * 1000;
 
   if (!force) {
@@ -296,21 +332,29 @@ async function loadNews(force = false) {
   }
 
   showSkeleton();
+  document.getElementById('statusBar').textContent = '뉴스 수집 중...';
+
   const results = await Promise.allSettled(FEEDS.map(fetchFeed));
-  const fetched = results.flatMap(r => r.status === 'fulfilled' ? r.value : []);
+  let fetched = results.flatMap(r => r.status === 'fulfilled' ? r.value : []);
 
   if (fetched.length > 0) {
     allNews = fetched.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-    localStorage.setItem(CACHE_KEY, JSON.stringify(allNews));
-    localStorage.setItem(CACHE_TS, Date.now().toString());
   } else {
     allNews = MOCK;
+    renderCards();
+    document.getElementById('statusBar').textContent = `샘플 데이터 표시 중 · ${allNews.length}개 기사`;
+    return;
   }
 
   renderCards();
-  const now = new Date().toLocaleString('ko-KR');
+  document.getElementById('statusBar').textContent = `번역 중... · ${allNews.length}개 기사`;
+
+  await translateBatch(allNews);
+
+  localStorage.setItem(CACHE_KEY, JSON.stringify(allNews));
+  localStorage.setItem(CACHE_TS, Date.now().toString());
   document.getElementById('statusBar').textContent =
-    `마지막 업데이트: ${now} · ${allNews.length}개 기사`;
+    `마지막 업데이트: ${new Date().toLocaleString('ko-KR')} · ${allNews.length}개 기사`;
 }
 
 loadNews();
