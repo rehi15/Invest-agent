@@ -3,10 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>물류 · 자동화 뉴스</title>
+<title>자동화물류 · 피지컬AI · 모듈러건축 뉴스</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-
   body {
     background: #f8fafc;
     color: #1e293b;
@@ -16,37 +15,41 @@
 
   header {
     position: sticky; top: 0; z-index: 10;
-    background: rgba(255,255,255,0.95);
+    background: rgba(255,255,255,0.97);
     backdrop-filter: blur(8px);
     border-bottom: 1px solid #e2e8f0;
-    padding: 14px 24px;
+    padding: 12px 24px;
     display: flex; align-items: center; justify-content: space-between;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
   }
   .logo { display: flex; align-items: center; gap: 10px; }
   .logo-icon {
-    width: 34px; height: 34px; border-radius: 8px;
-    background: linear-gradient(135deg, #2563eb, #0ea5e9);
-    display: flex; align-items: center; justify-content: center; font-size: 16px;
+    width: 36px; height: 36px; border-radius: 9px;
+    background: linear-gradient(135deg, #0f172a, #1e40af);
+    display: flex; align-items: center; justify-content: center; font-size: 17px;
   }
-  .logo-title { font-size: 15px; font-weight: 700; color: #0f172a; }
-  .logo-sub { font-size: 11px; color: #94a3b8; margin-top: 2px; }
+  .logo-title { font-size: 14px; font-weight: 700; color: #0f172a; line-height: 1.3; }
+  .logo-sub { font-size: 11px; color: #94a3b8; }
   .live-badge { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #64748b; }
-  .dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
 
   .hero {
-    background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 100%);
-    border-bottom: 1px solid #dbeafe;
-    padding: 28px 24px 22px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+    padding: 30px 24px 24px;
   }
   .hero-inner { max-width: 1200px; margin: 0 auto; }
-  .hero h2 { font-size: 22px; font-weight: 700; color: #0f172a; margin-bottom: 5px; }
-  .hero p { font-size: 13px; color: #64748b; }
+  .hero h2 { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+  .hero p { font-size: 13px; color: #93c5fd; }
+  .hero-tags { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+  .hero-tag {
+    font-size: 11px; padding: 4px 10px; border-radius: 999px; font-weight: 500;
+    background: rgba(255,255,255,0.1); color: #e2e8f0; border: 1px solid rgba(255,255,255,0.15);
+  }
 
   .controls { max-width: 1200px; margin: 0 auto; padding: 18px 24px 0; }
   .search-wrap { position: relative; margin-bottom: 12px; }
-  .search-wrap span { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); font-size: 13px; color: #94a3b8; }
+  .search-icon { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); font-size: 13px; color: #94a3b8; }
   .search-input {
     width: 100%; padding: 10px 16px 10px 36px;
     background: #fff; border: 1px solid #e2e8f0;
@@ -55,7 +58,7 @@
     box-shadow: 0 1px 2px rgba(0,0,0,0.04);
   }
   .search-input::placeholder { color: #cbd5e1; }
-  .search-input:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+  .search-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.12); }
 
   .tabs { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
   .tab {
@@ -65,74 +68,83 @@
     color: #64748b; cursor: pointer; transition: all 0.15s;
     box-shadow: 0 1px 2px rgba(0,0,0,0.04);
   }
-  .tab:hover { border-color: #93c5fd; color: #2563eb; background: #eff6ff; }
-  .tab.active { background: #2563eb; border-color: #2563eb; color: #fff; box-shadow: 0 2px 8px rgba(37,99,235,0.3); }
+  .tab:hover { color: #1e40af; border-color: #bfdbfe; background: #eff6ff; }
+  .tab.active { background: #0f172a; border-color: #0f172a; color: #fff; box-shadow: 0 2px 8px rgba(15,23,42,0.25); }
   .tab-refresh { margin-left: auto; }
-  .tab-refresh:hover { border-color: #86efac; color: #16a34a; background: #f0fdf4; }
+  .tab-refresh:hover { color: #15803d; border-color: #86efac; background: #f0fdf4; }
 
   .status-bar {
     max-width: 1200px; margin: 10px auto 0;
     padding: 0 24px; font-size: 11px; color: #94a3b8;
+    display: flex; align-items: center; gap: 8px;
   }
+  .status-spinner {
+    display: none; width: 10px; height: 10px;
+    border: 2px solid #e2e8f0; border-top-color: #3b82f6;
+    border-radius: 50%; animation: spin 0.7s linear infinite;
+  }
+  .status-spinner.visible { display: inline-block; }
+  @keyframes spin { to { transform: rotate(360deg); } }
 
   .grid {
     max-width: 1200px; margin: 14px auto 0;
     padding: 0 24px 48px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
     gap: 14px;
   }
 
   .card {
     background: #fff; border: 1px solid #e2e8f0;
-    border-radius: 14px; padding: 18px;
-    display: flex; flex-direction: column; gap: 10px;
+    border-radius: 14px; padding: 18px 18px 14px;
+    display: flex; flex-direction: column; gap: 9px;
     transition: box-shadow 0.2s, transform 0.15s, border-color 0.2s;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
   }
-  .card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.1); transform: translateY(-2px); border-color: #bfdbfe; }
+  .card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.1); transform: translateY(-2px); border-color: #bfdbfe; }
 
   .card-top { display: flex; justify-content: space-between; align-items: center; }
-  .badge { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 999px; }
-  .badge-logistics { background: #dbeafe; color: #1d4ed8; }
-  .badge-automation { background: #dcfce7; color: #15803d; }
-  .badge-ai { background: #f3e8ff; color: #7e22ce; }
+  .badge { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 999px; letter-spacing: 0.01em; }
+  .badge-logistics  { background: #dbeafe; color: #1d4ed8; }
+  .badge-physicalai { background: #fce7f3; color: #9d174d; }
+  .badge-modular    { background: #dcfce7; color: #166534; }
   .time { font-size: 11px; color: #94a3b8; }
 
   .card-title {
-    font-size: 13px; font-weight: 600; line-height: 1.55; color: #0f172a;
-    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+    font-size: 14px; font-weight: 700; line-height: 1.5; color: #0f172a;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
   }
+
+  .card-divider { height: 1px; background: #f1f5f9; margin: 2px 0; }
+
   .card-summary {
-    font-size: 12px; color: #64748b; line-height: 1.65;
-    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+    font-size: 12px; color: #475569; line-height: 1.7;
+    display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
   }
-  .card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 2px; }
+
+  .card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
   .card-source { font-size: 11px; color: #94a3b8; display: flex; align-items: center; gap: 5px; }
   .card-source::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: #cbd5e1; display: inline-block; }
   .card-link {
-    font-size: 11px; font-weight: 500; color: #2563eb;
+    font-size: 11px; font-weight: 600; color: #1d4ed8;
     text-decoration: none; display: flex; align-items: center; gap: 3px;
-    padding: 3px 8px; border-radius: 6px; border: 1px solid #bfdbfe;
-    transition: background 0.15s;
+    padding: 4px 10px; border-radius: 7px; border: 1px solid #bfdbfe;
+    background: #eff6ff; transition: background 0.15s, border-color 0.15s;
   }
-  .card-link:hover { background: #eff6ff; }
+  .card-link:hover { background: #dbeafe; border-color: #93c5fd; }
 
   /* Skeleton */
-  .skeleton { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 18px; }
-  .skel-line { background: #f1f5f9; border-radius: 6px; animation: shimmer 1.4s infinite; }
-  @keyframes shimmer { 0%,100%{opacity:0.6} 50%{opacity:1} }
+  .skeleton { background: #fff; border: 1px solid #f1f5f9; border-radius: 14px; padding: 18px; }
+  .skel { background: #f1f5f9; border-radius: 6px; animation: shimmer 1.4s infinite; margin-bottom: 8px; }
+  @keyframes shimmer { 0%,100%{opacity:0.55} 50%{opacity:1} }
 
-  .empty { grid-column: 1/-1; text-align: center; padding: 60px 0; color: #94a3b8; }
-  .empty .icon { font-size: 40px; margin-bottom: 10px; }
-
-  .translating { color: #94a3b8; font-style: italic; }
+  .empty { grid-column: 1/-1; text-align: center; padding: 70px 0; color: #94a3b8; }
+  .empty .icon { font-size: 40px; margin-bottom: 12px; }
 
   footer {
-    border-top: 1px solid #e2e8f0;
+    border-top: 1px solid #e2e8f0; background: #fff;
     text-align: center; padding: 18px;
     font-size: 11px; color: #cbd5e1;
-    background: #fff;
   }
 </style>
 </head>
@@ -140,10 +152,10 @@
 
 <header>
   <div class="logo">
-    <div class="logo-icon">🚚</div>
+    <div class="logo-icon">🏭</div>
     <div>
-      <div class="logo-title">물류 · 자동화 뉴스</div>
-      <div class="logo-sub">AI 물류·자동화 전문 피드</div>
+      <div class="logo-title">자동화물류 · 피지컬AI · 모듈러건축</div>
+      <div class="logo-sub">국내외 산업 자동화 전문 뉴스</div>
     </div>
   </div>
   <div class="live-badge"><span class="dot"></span> 자동 업데이트</div>
@@ -151,50 +163,83 @@
 
 <div class="hero">
   <div class="hero-inner">
-    <h2>물류 · 공급망 · 자동화 최신 소식</h2>
-    <p>물류, 공급망, 제조 자동화 분야의 글로벌 뉴스를 한국어로 번역하여 제공합니다 · 30분 캐시</p>
+    <h2>산업 자동화 인텔리전스 피드</h2>
+    <p>AMR · 셔틀시스템 · 피지컬AI · 모듈러건축 분야 국내외 최신 동향을 요약 제공합니다</p>
+    <div class="hero-tags">
+      <span class="hero-tag">🤖 AMR · 4-Way Shuttle</span>
+      <span class="hero-tag">🦾 휴머노이드 · 피지컬AI</span>
+      <span class="hero-tag">🏗️ 모듈러 건축 · 스마트 건설</span>
+      <span class="hero-tag">📡 국내 뉴스 우선</span>
+    </div>
   </div>
 </div>
 
 <div class="controls">
   <div class="search-wrap">
-    <span>🔍</span>
-    <input class="search-input" type="text" placeholder="뉴스 검색..." id="searchInput" oninput="renderCards()">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" type="text" placeholder="AMR, 셔틀, 휴머노이드, 모듈러..." id="searchInput" oninput="renderCards()">
   </div>
   <div class="tabs">
     <button class="tab active" onclick="setCategory('all', this)">📰 전체</button>
-    <button class="tab" onclick="setCategory('logistics', this)">🚚 물류</button>
-    <button class="tab" onclick="setCategory('automation', this)">⚙️ 자동화</button>
-    <button class="tab" onclick="setCategory('ai', this)">🤖 AI 물류</button>
+    <button class="tab" onclick="setCategory('logistics', this)">🚛 자동화 물류</button>
+    <button class="tab" onclick="setCategory('physicalai', this)">🦾 피지컬 AI</button>
+    <button class="tab" onclick="setCategory('modular', this)">🏗️ 모듈러·건축</button>
     <button class="tab tab-refresh" onclick="loadNews(true)">🔄 새로고침</button>
   </div>
 </div>
 
-<div class="status-bar" id="statusBar"></div>
+<div class="status-bar">
+  <span class="status-spinner" id="spinner"></span>
+  <span id="statusText">뉴스를 불러오는 중...</span>
+</div>
 <div class="grid" id="grid"></div>
 
-<footer>물류 · 자동화 뉴스 · 뉴스는 외부 RSS 피드에서 자동 수집 및 번역됩니다</footer>
+<footer>자동화물류 · 피지컬AI · 모듈러건축 뉴스 · 국내외 RSS 피드 자동 수집 및 번역</footer>
 
 <script>
-// 물류·자동화에 특화된 RSS 피드만 사용
+// ─── RSS 피드 설정 ─────────────────────────────────────────────
+// 국내 소스 우선, 해외 전문지 보완
 const FEEDS = [
-  { url: 'https://www.supplychaindive.com/feeds/news/', source: 'Supply Chain Dive', category: 'logistics' },
-  { url: 'https://www.logisticsmgmt.com/rss/news', source: 'Logistics Management', category: 'logistics' },
-  { url: 'https://www.freightwaves.com/news/feed', source: 'FreightWaves', category: 'logistics' },
-  { url: 'https://www.automationworld.com/rss.xml', source: 'Automation World', category: 'automation' },
-  { url: 'https://www.roboticsbusinessreview.com/feed/', source: 'Robotics Business Review', category: 'automation' },
-  { url: 'https://www.mhlnews.com/rss/all', source: 'MH&L News', category: 'automation' },
-  { url: 'https://feeds.feedburner.com/SupplyChainBrain', source: 'Supply Chain Brain', category: 'ai' },
-  { url: 'https://www.dcvelocity.com/rss/all_articles', source: 'DC Velocity', category: 'ai' },
+  // 자동화 물류 (AMR, 셔틀, AS/RS, 창고자동화)
+  { url: 'http://www.irobotnews.com/rss/allArticle.xml',         source: '로봇신문',           category: 'logistics', lang: 'ko' },
+  { url: 'http://www.klnews.co.kr/rss/allArticle.xml',           source: '물류신문',           category: 'logistics', lang: 'ko' },
+  { url: 'https://rss.etnews.com/Section901.xml',                source: '전자신문 로봇',       category: 'logistics', lang: 'ko' },
+  { url: 'https://www.automationworld.com/rss.xml',              source: 'Automation World',   category: 'logistics', lang: 'en' },
+  { url: 'https://www.mhlnews.com/rss/all',                      source: 'MH&L News',          category: 'logistics', lang: 'en' },
+  { url: 'https://www.roboticsbusinessreview.com/feed/',         source: 'Robotics Biz Review',category: 'logistics', lang: 'en' },
+
+  // 피지컬 AI (휴머노이드, 물리 AI, 산업 로봇 AI)
+  { url: 'http://www.irobotnews.com/rss/allArticle.xml',         source: '로봇신문(AI)',        category: 'physicalai', lang: 'ko' },
+  { url: 'https://rss.etnews.com/Section901.xml',                source: '전자신문 AI로봇',     category: 'physicalai', lang: 'ko' },
+  { url: 'https://techcrunch.com/tag/robotics/feed/',            source: 'TechCrunch 로보틱스', category: 'physicalai', lang: 'en' },
+  { url: 'https://feeds.feedburner.com/IEEESpectrumRobotics',    source: 'IEEE Spectrum',      category: 'physicalai', lang: 'en' },
+
+  // 모듈러·건축 (모듈러건축, 스마트건설, OSC)
+  { url: 'http://www.cnews.co.kr/rss/allArticle.xml',            source: '건설경제신문',        category: 'modular', lang: 'ko' },
+  { url: 'https://www.constructiondive.com/feeds/news/',         source: 'Construction Dive',  category: 'modular', lang: 'en' },
+  { url: 'https://www.modular.org/HtmlPage.aspx?name=rss',       source: 'Modular Building',   category: 'modular', lang: 'en' },
 ];
 
+// ─── 카테고리별 핵심 키워드 (관련 없는 기사 필터링) ─────────────
+const KEYWORDS = {
+  logistics:  ['amr','agv','shuttle','창고','물류','자동화','로봇','컨베이어','스태커','as/rs','picking','warehouse','autonomous','forklift','intralogistics','셔틀','무인'],
+  physicalai: ['humanoid','휴머노이드','physical ai','피지컬','로봇','robot','embodied','manipulation','dexterous','tesla optimus','figure','1x','unitree','boston dynamics','산업용 로봇','협동로봇'],
+  modular:    ['modular','모듈러','prefab','조립식','건축','건설','오에스씨','osc','volumetric','스마트 건설','off-site','공장제작','모듈 건축'],
+};
+
+function isRelevant(title, summary, category) {
+  const text = (title + ' ' + summary).toLowerCase();
+  return KEYWORDS[category].some(kw => text.includes(kw));
+}
+
+// ─── 목업 데이터 ─────────────────────────────────────────────
 const MOCK = [
-  { title: '아마존 물류센터, 자율주행 로봇 도입으로 피킹 효율 45% 향상', summary: '아마존이 최신 자율주행 로봇을 전국 물류센터에 배치하며 운영 효율성을 크게 높였습니다. AI 기반 경로 계획 알고리즘이 핵심입니다.', url: 'https://www.supplychaindive.com', source: 'Supply Chain Dive', category: 'logistics', publishedAt: new Date().toISOString() },
-  { title: '제조 자동화 시장 2030년까지 연평균 9.8% 성장 전망', summary: '글로벌 리서치 기관에 따르면 AI 기반 제조 자동화 시장이 폭발적으로 성장하고 있으며, 특히 한국과 일본 시장이 두드러집니다.', url: 'https://www.automationworld.com', source: 'Automation World', category: 'automation', publishedAt: new Date(Date.now()-3600000).toISOString() },
-  { title: '현대자동차, AI 기반 스마트 물류 플랫폼 "H-Logistics" 론칭', summary: '현대자동차그룹이 자체 개발한 AI 물류 플랫폼을 공개하며 부품 조달부터 완성차 배송까지 전 과정을 디지털화합니다.', url: 'https://www.mhlnews.com', source: 'MH&L News', category: 'ai', publishedAt: new Date(Date.now()-7200000).toISOString() },
-  { title: '드론 배송 자동화, 규제 완화로 국내 상용화 앞당겨질 전망', summary: '국토교통부가 도심 드론 배송 관련 규제를 대폭 완화하면서 CJ대한통운 등이 본격적인 서비스 확대를 준비 중입니다.', url: 'https://www.freightwaves.com', source: 'FreightWaves', category: 'logistics', publishedAt: new Date(Date.now()-10800000).toISOString() },
-  { title: '물류 로봇 시장, 2025년 전 세계 500억 달러 돌파 전망', summary: '창고 자동화 수요 급증으로 물류 로봇 시장이 빠르게 성장 중입니다. AMR(자율이동로봇)이 핵심 성장 동력입니다.', url: 'https://www.roboticsbusinessreview.com', source: 'Robotics Business Review', category: 'automation', publishedAt: new Date(Date.now()-14400000).toISOString() },
-  { title: 'AI 공급망 예측 솔루션, 재고 부족 사태 예방에 효과적', summary: '머신러닝 기반 수요 예측 솔루션을 도입한 기업들이 재고 비용을 평균 22% 절감했다는 연구 결과가 발표됐습니다.', url: 'https://www.dcvelocity.com', source: 'DC Velocity', category: 'ai', publishedAt: new Date(Date.now()-18000000).toISOString() },
+  { title: '현대차, AMR 기반 스마트 물류센터 본격 가동', summary: '현대자동차가 자율이동로봇(AMR) 200대를 투입한 스마트 물류센터를 울산에 개설했습니다. 4-Way 셔틀 시스템과 연계해 입출고 처리 속도를 기존 대비 3배 향상시켰습니다.', url: 'http://www.irobotnews.com', source: '로봇신문', category: 'logistics', publishedAt: new Date().toISOString() },
+  { title: 'CJ대한통운, AI 기반 창고 자동화 도입으로 피킹 오류 90% 감소', summary: 'CJ대한통운이 비전 AI 기반 자동화 피킹 시스템을 전국 15개 물류센터에 확대 적용했습니다. AS/RS(자동창고) 시스템과 연동해 운영 효율을 대폭 높였습니다.', url: 'http://www.klnews.co.kr', source: '물류신문', category: 'logistics', publishedAt: new Date(Date.now()-3600000).toISOString() },
+  { title: '보스턴 다이내믹스 아틀라스, 국내 자동차 공장 투입 시작', summary: '현대차그룹이 보스턴 다이내믹스의 휴머노이드 로봇 아틀라스를 국내 조립 공장에 시범 투입했습니다. 피지컬 AI 기술을 활용해 다양한 부품 조립 작업을 수행합니다.', url: 'http://www.irobotnews.com', source: '로봇신문', category: 'physicalai', publishedAt: new Date(Date.now()-7200000).toISOString() },
+  { title: 'Figure AI, 물류 창고용 휴머노이드 로봇 양산 계획 공개', summary: 'Figure AI가 BMW 공장 투입에 이어 물류 창고 전용 휴머노이드 로봇의 양산 로드맵을 공개했습니다. 2026년까지 1만 대 생산을 목표로 합니다.', url: 'https://techcrunch.com', source: 'TechCrunch', category: 'physicalai', publishedAt: new Date(Date.now()-10800000).toISOString() },
+  { title: '국내 모듈러 건축 시장, 2024년 1조원 돌파 전망', summary: '한국건설산업연구원은 국내 모듈러 건축 시장이 올해 처음으로 1조원을 넘을 것으로 전망했습니다. 공장 제작·현장 조립 방식이 공사 기간을 40% 단축시키는 효과가 있습니다.', url: 'http://www.cnews.co.kr', source: '건설경제신문', category: 'modular', publishedAt: new Date(Date.now()-14400000).toISOString() },
+  { title: '삼성물산, 모듈러 공법 적용 데이터센터 건설 발표', summary: '삼성물산이 경기도 안성에 모듈러 공법을 적용한 하이퍼스케일 데이터센터를 착공했습니다. 공장 사전 제작으로 공기를 18개월에서 11개월로 단축할 예정입니다.', url: 'https://www.constructiondive.com', source: '건설경제신문', category: 'modular', publishedAt: new Date(Date.now()-18000000).toISOString() },
 ];
 
 let allNews = [];
@@ -203,7 +248,8 @@ let currentCategory = 'all';
 function formatDate(dateStr) {
   const diff = Date.now() - new Date(dateStr).getTime();
   const h = Math.floor(diff / 3600000);
-  if (h < 24) return h < 1 ? '방금 전' : h + '시간 전';
+  if (h < 1) return '방금 전';
+  if (h < 24) return h + '시간 전';
   const d = new Date(dateStr);
   return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
 }
@@ -224,53 +270,63 @@ async function translate(text) {
   }
 }
 
+// 핵심 내용만 2~3문장으로 압축
+function summarize(text) {
+  const clean = stripHtml(text);
+  const sentences = clean.split(/(?<=[.!?。])\s+/).filter(s => s.length > 20);
+  return sentences.slice(0, 3).join(' ').slice(0, 250) + (clean.length > 250 ? '...' : '');
+}
+
+function setStatus(text, loading = false) {
+  document.getElementById('statusText').textContent = text;
+  document.getElementById('spinner').className = 'status-spinner' + (loading ? ' visible' : '');
+}
+
 function showSkeleton() {
-  const grid = document.getElementById('grid');
-  grid.innerHTML = Array.from({length: 6}).map(() => `
+  document.getElementById('grid').innerHTML = Array.from({length: 6}).map(() => `
     <div class="skeleton">
-      <div style="display:flex;justify-content:space-between;margin-bottom:12px">
-        <div class="skel-line" style="width:48px;height:20px;border-radius:999px"></div>
-        <div class="skel-line" style="width:48px;height:14px"></div>
+      <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+        <div class="skel" style="width:72px;height:20px;border-radius:999px;margin-bottom:0"></div>
+        <div class="skel" style="width:50px;height:14px;margin-bottom:0"></div>
       </div>
-      <div class="skel-line" style="width:100%;height:14px;margin-bottom:6px"></div>
-      <div class="skel-line" style="width:85%;height:14px;margin-bottom:12px"></div>
-      <div class="skel-line" style="width:100%;height:11px;margin-bottom:5px"></div>
-      <div class="skel-line" style="width:70%;height:11px;margin-bottom:14px"></div>
-      <div class="skel-line" style="width:55%;height:11px"></div>
-    </div>
-  `).join('');
+      <div class="skel" style="width:100%;height:15px"></div>
+      <div class="skel" style="width:80%;height:15px"></div>
+      <div class="skel" style="width:100%;height:11px"></div>
+      <div class="skel" style="width:100%;height:11px"></div>
+      <div class="skel" style="width:65%;height:11px"></div>
+    </div>`).join('');
 }
 
 function renderCards() {
   const q = document.getElementById('searchInput').value.toLowerCase();
   let items = currentCategory === 'all' ? allNews : allNews.filter(n => n.category === currentCategory);
-  if (q) items = items.filter(n => n.title.toLowerCase().includes(q) || (n.summary||'').toLowerCase().includes(q));
+  if (q) items = items.filter(n =>
+    n.title.toLowerCase().includes(q) || (n.summary || '').toLowerCase().includes(q)
+  );
 
   const grid = document.getElementById('grid');
   if (!items.length) {
-    grid.innerHTML = '<div class="empty"><div class="icon">📭</div><p>검색 결과가 없습니다</p></div>';
+    grid.innerHTML = '<div class="empty"><div class="icon">📭</div><p>해당하는 기사가 없습니다</p></div>';
     return;
   }
 
-  const badgeClass = { ai: 'badge-ai', logistics: 'badge-logistics', automation: 'badge-automation' };
-  const badgeLabel = { ai: 'AI 물류', logistics: '물류', automation: '자동화' };
+  const bClass = { logistics: 'badge-logistics', physicalai: 'badge-physicalai', modular: 'badge-modular' };
+  const bLabel = { logistics: '🚛 자동화 물류', physicalai: '🦾 피지컬 AI', modular: '🏗️ 모듈러·건축' };
 
   grid.innerHTML = items.map(n => `
     <div class="card">
       <div class="card-top">
-        <span class="badge ${badgeClass[n.category]}">${badgeLabel[n.category]}</span>
+        <span class="badge ${bClass[n.category]}">${bLabel[n.category]}</span>
         <span class="time">${formatDate(n.publishedAt)}</span>
       </div>
       <div class="card-title">${n.title}</div>
-      ${n.summary ? `<div class="card-summary">${n.summary}</div>` : ''}
+      <div class="card-divider"></div>
+      <div class="card-summary">${n.summary || '내용을 불러오는 중입니다.'}</div>
       <div class="card-footer">
         <div class="card-source">${n.source}</div>
-        ${n.url && n.url !== '#'
-          ? `<a class="card-link" href="${n.url}" target="_blank" rel="noopener noreferrer">원문 보기 →</a>`
-          : ''}
+        ${n.url ? `<a class="card-link" href="${n.url}" target="_blank" rel="noopener noreferrer">원문 보기 →</a>` : ''}
       </div>
-    </div>
-  `).join('');
+    </div>`).join('');
 }
 
 function setCategory(cat, btn) {
@@ -284,77 +340,90 @@ async function fetchFeed(feed) {
   const res = await fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feed.url));
   const data = await res.json();
   if (data.status !== 'ok') return [];
-  return (data.items || []).slice(0, 8).map((item, i) => ({
-    id: feed.source + i + item.pubDate,
-    title: item.title || '',
-    summary: stripHtml(item.description || item.content || '').slice(0, 300),
-    url: item.link || '#',
-    source: feed.source,
-    category: feed.category,
-    publishedAt: item.pubDate || new Date().toISOString(),
-    translated: false,
-  }));
+  return (data.items || []).slice(0, 12)
+    .map((item, i) => {
+      const rawTitle   = item.title || '';
+      const rawSummary = summarize(item.description || item.content || '');
+      return {
+        id: feed.source + i + (item.pubDate || ''),
+        title:       rawTitle,
+        summary:     rawSummary,
+        url:         item.link || '',
+        source:      feed.source,
+        category:    feed.category,
+        lang:        feed.lang,
+        publishedAt: item.pubDate || new Date().toISOString(),
+        translated:  feed.lang === 'ko',
+      };
+    })
+    .filter(item => isRelevant(item.title, item.summary, item.category));
 }
 
 async function translateBatch(items) {
-  const BATCH = 5;
-  for (let i = 0; i < items.length; i += BATCH) {
-    const batch = items.slice(i, i + BATCH);
-    await Promise.all(batch.map(async (item) => {
-      if (item.translated) return;
+  const toTranslate = items.filter(n => !n.translated);
+  const BATCH = 4;
+  for (let i = 0; i < toTranslate.length; i += BATCH) {
+    await Promise.all(toTranslate.slice(i, i + BATCH).map(async item => {
       const [title, summary] = await Promise.all([
         translate(item.title),
         translate(item.summary),
       ]);
-      item.title = title;
-      item.summary = summary;
+      item.title     = title;
+      item.summary   = summary;
       item.translated = true;
     }));
     renderCards();
+    setStatus(`번역 중... (${Math.min(i + BATCH, toTranslate.length)}/${toTranslate.length})`, true);
   }
 }
 
 async function loadNews(force = false) {
-  const CACHE_KEY = 'logistics_news_v2';
-  const CACHE_TS  = 'logistics_news_ts_v2';
+  const KEY_DATA = 'industry_news_v3';
+  const KEY_TIME = 'industry_news_ts_v3';
   const TTL = 30 * 60 * 1000;
 
   if (!force) {
-    const cached = localStorage.getItem(CACHE_KEY);
-    const ts = parseInt(localStorage.getItem(CACHE_TS) || '0');
+    const cached = localStorage.getItem(KEY_DATA);
+    const ts     = parseInt(localStorage.getItem(KEY_TIME) || '0');
     if (cached && Date.now() - ts < TTL) {
       allNews = JSON.parse(cached);
       renderCards();
-      document.getElementById('statusBar').textContent =
-        `마지막 업데이트: ${new Date(ts).toLocaleString('ko-KR')} · ${allNews.length}개 기사 (캐시)`;
+      setStatus(`마지막 업데이트: ${new Date(ts).toLocaleString('ko-KR')} · ${allNews.length}개 기사 (캐시)`);
       return;
     }
   }
 
   showSkeleton();
-  document.getElementById('statusBar').textContent = '뉴스 수집 중...';
+  setStatus('뉴스 수집 중...', true);
 
   const results = await Promise.allSettled(FEEDS.map(fetchFeed));
   let fetched = results.flatMap(r => r.status === 'fulfilled' ? r.value : []);
+
+  // 중복 제거 (같은 제목)
+  const seen = new Set();
+  fetched = fetched.filter(n => {
+    const key = n.title.slice(0, 30);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 
   if (fetched.length > 0) {
     allNews = fetched.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
   } else {
     allNews = MOCK;
     renderCards();
-    document.getElementById('statusBar').textContent = `샘플 데이터 표시 중 · ${allNews.length}개 기사`;
+    setStatus(`샘플 데이터 표시 중 (네트워크 확인 필요) · ${allNews.length}개 기사`);
     return;
   }
 
   renderCards();
-  document.getElementById('statusBar').textContent = `번역 중... · ${allNews.length}개 기사`;
-
+  setStatus(`번역 중... · ${allNews.length}개 기사`, true);
   await translateBatch(allNews);
 
-  localStorage.setItem(CACHE_KEY, JSON.stringify(allNews));
-  localStorage.setItem(CACHE_TS, Date.now().toString());
-  document.getElementById('statusBar').textContent =
-    `마지막 업데이트: ${new Date().toLocaleString('ko-KR')} · ${allNews.length}개 기사`;
+  localStorage.setItem(KEY_DATA, JSON.stringify(allNews));
+  localStorage.setItem(KEY_TIME, Date.now().toString());
+  setStatus(`마지막 업데이트: ${new Date().toLocaleString('ko-KR')} · ${allNews.length}개 기사`);
 }
 
 loadNews();
