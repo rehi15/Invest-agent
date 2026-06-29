@@ -5,147 +5,174 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>자동화물류 · 피지컬AI · 모듈러건축 뉴스</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    background: #f8fafc;
-    color: #1e293b;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', sans-serif;
-    min-height: 100vh;
-  }
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background:#f8fafc; color:#1e293b;
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans KR',sans-serif;
+  min-height:100vh;
+}
 
-  header {
-    position: sticky; top: 0; z-index: 10;
-    background: rgba(255,255,255,0.97);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid #e2e8f0;
-    padding: 12px 24px;
-    display: flex; align-items: center; justify-content: space-between;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-  }
-  .logo { display: flex; align-items: center; gap: 10px; }
-  .logo-icon {
-    width: 36px; height: 36px; border-radius: 9px;
-    background: linear-gradient(135deg, #0f172a, #1e40af);
-    display: flex; align-items: center; justify-content: center; font-size: 17px;
-  }
-  .logo-title { font-size: 14px; font-weight: 700; color: #0f172a; line-height: 1.3; }
-  .logo-sub { font-size: 11px; color: #94a3b8; }
-  .live-badge { display: flex; align-items: center; gap: 6px; font-size: 12px; color: #64748b; }
-  .dot { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.35} }
+/* ── Header ── */
+header {
+  position:sticky; top:0; z-index:100;
+  background:rgba(255,255,255,0.97); backdrop-filter:blur(8px);
+  border-bottom:1px solid #e2e8f0;
+  padding:12px 24px; display:flex; align-items:center; justify-content:space-between;
+  box-shadow:0 1px 4px rgba(0,0,0,0.06);
+}
+.logo { display:flex; align-items:center; gap:10px; }
+.logo-icon {
+  width:36px; height:36px; border-radius:9px;
+  background:linear-gradient(135deg,#0f172a,#1e40af);
+  display:flex; align-items:center; justify-content:center; font-size:17px;
+}
+.logo-title { font-size:14px; font-weight:700; color:#0f172a; }
+.logo-sub   { font-size:11px; color:#94a3b8; }
+.live-badge { display:flex; align-items:center; gap:6px; font-size:12px; color:#64748b; }
+.dot { width:7px; height:7px; border-radius:50%; background:#22c55e; animation:pulse 2s infinite; }
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
 
-  .hero {
-    background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
-    padding: 30px 24px 24px;
-  }
-  .hero-inner { max-width: 1200px; margin: 0 auto; }
-  .hero h2 { font-size: 22px; font-weight: 700; color: #fff; margin-bottom: 6px; }
-  .hero p { font-size: 13px; color: #93c5fd; }
-  .hero-tags { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
-  .hero-tag {
-    font-size: 11px; padding: 4px 10px; border-radius: 999px; font-weight: 500;
-    background: rgba(255,255,255,0.1); color: #e2e8f0; border: 1px solid rgba(255,255,255,0.15);
-  }
+/* ── Hero ── */
+.hero { background:linear-gradient(135deg,#0f172a,#1e3a5f); padding:28px 24px 22px; }
+.hero-inner { max-width:1200px; margin:0 auto; }
+.hero h2 { font-size:22px; font-weight:700; color:#fff; margin-bottom:6px; }
+.hero p  { font-size:13px; color:#93c5fd; }
+.hero-tags { display:flex; gap:8px; margin-top:14px; flex-wrap:wrap; }
+.hero-tag {
+  font-size:11px; padding:4px 10px; border-radius:999px; font-weight:500;
+  background:rgba(255,255,255,.1); color:#e2e8f0; border:1px solid rgba(255,255,255,.15);
+}
 
-  .controls { max-width: 1200px; margin: 0 auto; padding: 18px 24px 0; }
-  .search-wrap { position: relative; margin-bottom: 12px; }
-  .search-icon { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); font-size: 13px; color: #94a3b8; }
-  .search-input {
-    width: 100%; padding: 10px 16px 10px 36px;
-    background: #fff; border: 1px solid #e2e8f0;
-    border-radius: 10px; color: #1e293b; font-size: 13px;
-    outline: none; transition: border-color 0.2s, box-shadow 0.2s;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-  }
-  .search-input::placeholder { color: #cbd5e1; }
-  .search-input:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,0.12); }
+/* ── Controls ── */
+.controls { max-width:1200px; margin:0 auto; padding:18px 24px 0; }
+.search-wrap { position:relative; margin-bottom:12px; }
+.search-icon { position:absolute; left:13px; top:50%; transform:translateY(-50%); font-size:13px; color:#94a3b8; }
+.search-input {
+  width:100%; padding:10px 16px 10px 36px;
+  background:#fff; border:1px solid #e2e8f0; border-radius:10px;
+  color:#1e293b; font-size:13px; outline:none;
+  transition:border-color .2s,box-shadow .2s;
+  box-shadow:0 1px 2px rgba(0,0,0,.04);
+}
+.search-input::placeholder{color:#cbd5e1;}
+.search-input:focus{border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.12);}
 
-  .tabs { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
-  .tab {
-    display: flex; align-items: center; gap: 5px;
-    padding: 7px 14px; border-radius: 999px; font-size: 13px; font-weight: 500;
-    border: 1px solid #e2e8f0; background: #fff;
-    color: #64748b; cursor: pointer; transition: all 0.15s;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-  }
-  .tab:hover { color: #1e40af; border-color: #bfdbfe; background: #eff6ff; }
-  .tab.active { background: #0f172a; border-color: #0f172a; color: #fff; box-shadow: 0 2px 8px rgba(15,23,42,0.25); }
-  .tab-refresh { margin-left: auto; }
-  .tab-refresh:hover { color: #15803d; border-color: #86efac; background: #f0fdf4; }
+.tabs { display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+.tab {
+  display:flex; align-items:center; gap:5px;
+  padding:7px 14px; border-radius:999px; font-size:13px; font-weight:500;
+  border:1px solid #e2e8f0; background:#fff; color:#64748b;
+  cursor:pointer; transition:all .15s; box-shadow:0 1px 2px rgba(0,0,0,.04);
+}
+.tab:hover{color:#1e40af;border-color:#bfdbfe;background:#eff6ff;}
+.tab.active{background:#0f172a;border-color:#0f172a;color:#fff;box-shadow:0 2px 8px rgba(15,23,42,.25);}
+.tab-yt.active{background:#dc2626;border-color:#dc2626;}
+.tab-refresh{margin-left:auto;}
+.tab-refresh:hover{color:#15803d;border-color:#86efac;background:#f0fdf4;}
 
-  .status-bar {
-    max-width: 1200px; margin: 10px auto 0;
-    padding: 0 24px; font-size: 11px; color: #94a3b8;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .status-spinner {
-    display: none; width: 10px; height: 10px;
-    border: 2px solid #e2e8f0; border-top-color: #3b82f6;
-    border-radius: 50%; animation: spin 0.7s linear infinite;
-  }
-  .status-spinner.visible { display: inline-block; }
-  @keyframes spin { to { transform: rotate(360deg); } }
+/* ── Status ── */
+.status-bar { max-width:1200px; margin:10px auto 0; padding:0 24px; font-size:11px; color:#94a3b8; display:flex; align-items:center; gap:8px; }
+.spinner { display:none; width:10px; height:10px; border:2px solid #e2e8f0; border-top-color:#3b82f6; border-radius:50%; animation:spin .7s linear infinite; }
+.spinner.on{display:inline-block;}
+@keyframes spin{to{transform:rotate(360deg)}}
 
-  .grid {
-    max-width: 1200px; margin: 14px auto 0;
-    padding: 0 24px 48px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-    gap: 14px;
-  }
+/* ── Grid ── */
+.grid {
+  max-width:1200px; margin:14px auto 0; padding:0 24px 48px;
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(310px,1fr)); gap:14px;
+}
 
-  .card {
-    background: #fff; border: 1px solid #e2e8f0;
-    border-radius: 14px; padding: 18px 18px 14px;
-    display: flex; flex-direction: column; gap: 9px;
-    transition: box-shadow 0.2s, transform 0.15s, border-color 0.2s;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-  }
-  .card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.1); transform: translateY(-2px); border-color: #bfdbfe; }
+/* ── News Card ── */
+.card {
+  background:#fff; border:1px solid #e2e8f0; border-radius:14px; padding:18px 18px 14px;
+  display:flex; flex-direction:column; gap:9px;
+  transition:box-shadow .2s,transform .15s,border-color .2s;
+  box-shadow:0 1px 3px rgba(0,0,0,.05); cursor:pointer;
+}
+.card:hover{box-shadow:0 6px 24px rgba(0,0,0,.1);transform:translateY(-2px);border-color:#bfdbfe;}
+.card-top{display:flex;justify-content:space-between;align-items:center;}
+.badge{font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px;}
+.badge-logistics {background:#dbeafe;color:#1d4ed8;}
+.badge-physicalai{background:#fce7f3;color:#9d174d;}
+.badge-modular   {background:#dcfce7;color:#166534;}
+.badge-youtube   {background:#fee2e2;color:#dc2626;}
+.time{font-size:11px;color:#94a3b8;}
+.card-title{font-size:14px;font-weight:700;line-height:1.5;color:#0f172a;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.card-divider{height:1px;background:#f1f5f9;margin:2px 0;}
+.card-summary{font-size:12px;color:#475569;line-height:1.7;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:4px;}
+.card-source{font-size:11px;color:#94a3b8;display:flex;align-items:center;gap:5px;}
+.card-source::before{content:'';width:5px;height:5px;border-radius:50%;background:#cbd5e1;display:inline-block;}
+.card-hint{font-size:11px;color:#94a3b8;display:flex;align-items:center;gap:3px;}
 
-  .card-top { display: flex; justify-content: space-between; align-items: center; }
-  .badge { font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 999px; letter-spacing: 0.01em; }
-  .badge-logistics  { background: #dbeafe; color: #1d4ed8; }
-  .badge-physicalai { background: #fce7f3; color: #9d174d; }
-  .badge-modular    { background: #dcfce7; color: #166534; }
-  .time { font-size: 11px; color: #94a3b8; }
+/* ── YouTube Card ── */
+.yt-card {
+  background:#fff; border:1px solid #e2e8f0; border-radius:14px; overflow:hidden;
+  display:flex; flex-direction:column;
+  transition:box-shadow .2s,transform .15s,border-color .2s;
+  box-shadow:0 1px 3px rgba(0,0,0,.05); cursor:pointer; text-decoration:none; color:inherit;
+}
+.yt-card:hover{box-shadow:0 6px 24px rgba(0,0,0,.1);transform:translateY(-2px);border-color:#fecaca;}
+.yt-thumb-wrap{position:relative;width:100%;aspect-ratio:16/9;background:#0f172a;overflow:hidden;}
+.yt-thumb{width:100%;height:100%;object-fit:cover;display:block;}
+.yt-play{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:44px;height:44px;border-radius:50%;background:rgba(220,38,38,.9);
+  display:flex;align-items:center;justify-content:center;font-size:16px;
+  transition:transform .2s;
+}
+.yt-card:hover .yt-play{transform:translate(-50%,-50%) scale(1.12);}
+.yt-info{padding:14px;}
+.yt-channel{font-size:11px;color:#94a3b8;margin-bottom:5px;display:flex;align-items:center;gap:5px;}
+.yt-channel::before{content:'';width:5px;height:5px;border-radius:50%;background:#fca5a5;display:inline-block;}
+.yt-title{font-size:13px;font-weight:600;line-height:1.5;color:#0f172a;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.yt-date{font-size:11px;color:#94a3b8;margin-top:6px;}
 
-  .card-title {
-    font-size: 14px; font-weight: 700; line-height: 1.5; color: #0f172a;
-    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
-  }
+/* ── Skeleton ── */
+.skeleton{background:#fff;border:1px solid #f1f5f9;border-radius:14px;padding:18px;}
+.skel{background:#f1f5f9;border-radius:6px;animation:shimmer 1.4s infinite;margin-bottom:8px;}
+@keyframes shimmer{0%,100%{opacity:.55}50%{opacity:1}}
 
-  .card-divider { height: 1px; background: #f1f5f9; margin: 2px 0; }
+.empty{grid-column:1/-1;text-align:center;padding:70px 0;color:#94a3b8;}
+.empty .icon{font-size:40px;margin-bottom:12px;}
 
-  .card-summary {
-    font-size: 12px; color: #475569; line-height: 1.7;
-    display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
-  }
+/* ── Modal ── */
+.modal-bg {
+  display:none; position:fixed; inset:0; z-index:200;
+  background:rgba(15,23,42,.6); backdrop-filter:blur(4px);
+  align-items:center; justify-content:center; padding:24px;
+}
+.modal-bg.open{display:flex;}
+.modal {
+  background:#fff; border-radius:18px; max-width:640px; width:100%;
+  max-height:85vh; overflow-y:auto; box-shadow:0 24px 60px rgba(0,0,0,.2);
+  animation:slideUp .25s ease;
+}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-header{padding:20px 22px 0;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+.modal-badge-row{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+.modal-close{
+  width:30px;height:30px;border-radius:50%;border:1px solid #e2e8f0;
+  background:#f8fafc;cursor:pointer;font-size:16px;color:#64748b;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  transition:background .15s;
+}
+.modal-close:hover{background:#e2e8f0;}
+.modal-body{padding:0 22px 22px;}
+.modal-title{font-size:17px;font-weight:700;color:#0f172a;line-height:1.5;margin-bottom:16px;}
+.modal-divider{height:1px;background:#f1f5f9;margin-bottom:16px;}
+.modal-summary{font-size:13px;color:#475569;line-height:1.8;white-space:pre-line;}
+.modal-footer{padding:14px 22px;border-top:1px solid #f1f5f9;display:flex;align-items:center;justify-content:space-between;}
+.modal-source{font-size:12px;color:#94a3b8;}
+.modal-link{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:8px 16px;border-radius:8px;
+  background:#0f172a;color:#fff;font-size:13px;font-weight:600;
+  text-decoration:none;transition:background .15s;
+}
+.modal-link:hover{background:#1e40af;}
 
-  .card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 4px; }
-  .card-source { font-size: 11px; color: #94a3b8; display: flex; align-items: center; gap: 5px; }
-  .card-source::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: #cbd5e1; display: inline-block; }
-  .card-link {
-    font-size: 11px; font-weight: 600; color: #1d4ed8;
-    text-decoration: none; display: flex; align-items: center; gap: 3px;
-    padding: 4px 10px; border-radius: 7px; border: 1px solid #bfdbfe;
-    background: #eff6ff; transition: background 0.15s, border-color 0.15s;
-  }
-  .card-link:hover { background: #dbeafe; border-color: #93c5fd; }
-
-  /* Skeleton */
-  .skeleton { background: #fff; border: 1px solid #f1f5f9; border-radius: 14px; padding: 18px; }
-  .skel { background: #f1f5f9; border-radius: 6px; animation: shimmer 1.4s infinite; margin-bottom: 8px; }
-  @keyframes shimmer { 0%,100%{opacity:0.55} 50%{opacity:1} }
-
-  .empty { grid-column: 1/-1; text-align: center; padding: 70px 0; color: #94a3b8; }
-  .empty .icon { font-size: 40px; margin-bottom: 12px; }
-
-  footer {
-    border-top: 1px solid #e2e8f0; background: #fff;
-    text-align: center; padding: 18px;
-    font-size: 11px; color: #cbd5e1;
-  }
+footer{border-top:1px solid #e2e8f0;background:#fff;text-align:center;padding:18px;font-size:11px;color:#cbd5e1;}
 </style>
 </head>
 <body>
@@ -169,7 +196,7 @@
       <span class="hero-tag">🤖 AMR · 4-Way Shuttle</span>
       <span class="hero-tag">🦾 휴머노이드 · 피지컬AI</span>
       <span class="hero-tag">🏗️ 모듈러 건축 · 스마트 건설</span>
-      <span class="hero-tag">📡 국내 뉴스 우선</span>
+      <span class="hero-tag">▶ YouTube 영상</span>
     </div>
   </div>
 </div>
@@ -177,256 +204,354 @@
 <div class="controls">
   <div class="search-wrap">
     <span class="search-icon">🔍</span>
-    <input class="search-input" type="text" placeholder="AMR, 셔틀, 휴머노이드, 모듈러..." id="searchInput" oninput="renderCards()">
+    <input class="search-input" type="text" placeholder="AMR, 셔틀, 휴머노이드, 모듈러..." id="searchInput" oninput="render()">
   </div>
   <div class="tabs">
-    <button class="tab active" onclick="setCategory('all', this)">📰 전체</button>
-    <button class="tab" onclick="setCategory('logistics', this)">🚛 자동화 물류</button>
-    <button class="tab" onclick="setCategory('physicalai', this)">🦾 피지컬 AI</button>
-    <button class="tab" onclick="setCategory('modular', this)">🏗️ 모듈러·건축</button>
-    <button class="tab tab-refresh" onclick="loadNews(true)">🔄 새로고침</button>
+    <button class="tab active"    onclick="setTab('all',this)">📰 전체</button>
+    <button class="tab"           onclick="setTab('logistics',this)">🚛 자동화 물류</button>
+    <button class="tab"           onclick="setTab('physicalai',this)">🦾 피지컬 AI</button>
+    <button class="tab"           onclick="setTab('modular',this)">🏗️ 모듈러·건축</button>
+    <button class="tab tab-yt"    onclick="setTab('youtube',this)">▶ YouTube</button>
+    <button class="tab tab-refresh" onclick="loadAll(true)">🔄 새로고침</button>
   </div>
 </div>
 
 <div class="status-bar">
-  <span class="status-spinner" id="spinner"></span>
-  <span id="statusText">뉴스를 불러오는 중...</span>
+  <span class="spinner" id="spinner"></span>
+  <span id="statusText">불러오는 중...</span>
 </div>
 <div class="grid" id="grid"></div>
 
-<footer>자동화물류 · 피지컬AI · 모듈러건축 뉴스 · 국내외 RSS 피드 자동 수집 및 번역</footer>
+<!-- Modal -->
+<div class="modal-bg" id="modalBg" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-badge-row">
+          <span class="badge" id="modalBadge"></span>
+          <span class="time" id="modalTime"></span>
+        </div>
+        <div class="modal-title" id="modalTitle"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-divider"></div>
+      <div class="modal-summary" id="modalSummary"></div>
+    </div>
+    <div class="modal-footer">
+      <div class="modal-source" id="modalSource"></div>
+      <a class="modal-link" id="modalLink" href="#" target="_blank" rel="noopener noreferrer">원문 보기 →</a>
+    </div>
+  </div>
+</div>
+
+<footer>자동화물류 · 피지컬AI · 모듈러건축 뉴스 · 국내외 RSS 자동 수집 및 번역 · 카드 클릭 시 요약 전문 확인</footer>
 
 <script>
-// ─── RSS 피드 설정 ─────────────────────────────────────────────
-// 국내 소스 우선, 해외 전문지 보완
-const FEEDS = [
-  // 자동화 물류 (AMR, 셔틀, AS/RS, 창고자동화)
-  { url: 'http://www.irobotnews.com/rss/allArticle.xml',         source: '로봇신문',           category: 'logistics', lang: 'ko' },
-  { url: 'http://www.klnews.co.kr/rss/allArticle.xml',           source: '물류신문',           category: 'logistics', lang: 'ko' },
-  { url: 'https://rss.etnews.com/Section901.xml',                source: '전자신문 로봇',       category: 'logistics', lang: 'ko' },
-  { url: 'https://www.automationworld.com/rss.xml',              source: 'Automation World',   category: 'logistics', lang: 'en' },
-  { url: 'https://www.mhlnews.com/rss/all',                      source: 'MH&L News',          category: 'logistics', lang: 'en' },
-  { url: 'https://www.roboticsbusinessreview.com/feed/',         source: 'Robotics Biz Review',category: 'logistics', lang: 'en' },
-
-  // 피지컬 AI (휴머노이드, 물리 AI, 산업 로봇 AI)
-  { url: 'http://www.irobotnews.com/rss/allArticle.xml',         source: '로봇신문(AI)',        category: 'physicalai', lang: 'ko' },
-  { url: 'https://rss.etnews.com/Section901.xml',                source: '전자신문 AI로봇',     category: 'physicalai', lang: 'ko' },
-  { url: 'https://techcrunch.com/tag/robotics/feed/',            source: 'TechCrunch 로보틱스', category: 'physicalai', lang: 'en' },
-  { url: 'https://feeds.feedburner.com/IEEESpectrumRobotics',    source: 'IEEE Spectrum',      category: 'physicalai', lang: 'en' },
-
-  // 모듈러·건축 (모듈러건축, 스마트건설, OSC)
-  { url: 'http://www.cnews.co.kr/rss/allArticle.xml',            source: '건설경제신문',        category: 'modular', lang: 'ko' },
-  { url: 'https://www.constructiondive.com/feeds/news/',         source: 'Construction Dive',  category: 'modular', lang: 'en' },
-  { url: 'https://www.modular.org/HtmlPage.aspx?name=rss',       source: 'Modular Building',   category: 'modular', lang: 'en' },
+// ── RSS 뉴스 피드 ──────────────────────────────────────────────
+const NEWS_FEEDS = [
+  { url:'http://www.irobotnews.com/rss/allArticle.xml',        source:'로봇신문',            category:'logistics',  lang:'ko' },
+  { url:'http://www.klnews.co.kr/rss/allArticle.xml',          source:'물류신문',            category:'logistics',  lang:'ko' },
+  { url:'https://rss.etnews.com/Section901.xml',               source:'전자신문',             category:'logistics',  lang:'ko' },
+  { url:'https://www.automationworld.com/rss.xml',             source:'Automation World',    category:'logistics',  lang:'en' },
+  { url:'https://www.mhlnews.com/rss/all',                     source:'MH&L News',           category:'logistics',  lang:'en' },
+  { url:'https://www.roboticsbusinessreview.com/feed/',        source:'Robotics Biz Review', category:'physicalai', lang:'en' },
+  { url:'https://techcrunch.com/tag/robotics/feed/',           source:'TechCrunch Robotics', category:'physicalai', lang:'en' },
+  { url:'https://rss.etnews.com/Section901.xml',               source:'전자신문(AI로봇)',      category:'physicalai', lang:'ko' },
+  { url:'http://www.cnews.co.kr/rss/allArticle.xml',           source:'건설경제신문',          category:'modular',    lang:'ko' },
+  { url:'https://www.constructiondive.com/feeds/news/',        source:'Construction Dive',   category:'modular',    lang:'en' },
 ];
 
-// ─── 카테고리별 핵심 키워드 (관련 없는 기사 필터링) ─────────────
-const KEYWORDS = {
-  logistics:  ['amr','agv','shuttle','창고','물류','자동화','로봇','컨베이어','스태커','as/rs','picking','warehouse','autonomous','forklift','intralogistics','셔틀','무인'],
-  physicalai: ['humanoid','휴머노이드','physical ai','피지컬','로봇','robot','embodied','manipulation','dexterous','tesla optimus','figure','1x','unitree','boston dynamics','산업용 로봇','협동로봇'],
-  modular:    ['modular','모듈러','prefab','조립식','건축','건설','오에스씨','osc','volumetric','스마트 건설','off-site','공장제작','모듈 건축'],
-};
+// ── YouTube 채널 RSS (API 키 불필요) ──────────────────────────
+const YT_CHANNELS = [
+  // 자동화 물류
+  { id:'UCN4-40i98S7B5YYJXE3FRIQ', name:'Swisslog',           category:'logistics'  },
+  { id:'UCqEbISbRVDGbLvLTZ2_J67A', name:'AutoStore',          category:'logistics'  },
+  { id:'UCYAHGhDUf1YqLABFhOTD8Vg', name:'Vanderlande',        category:'logistics'  },
+  // 피지컬 AI
+  { id:'UC7vVhkEfw4nOGp8TyDk7RcQ', name:'Boston Dynamics',    category:'physicalai' },
+  { id:'UCBFJiUyjTwc3f-d0FjsVCEQ', name:'Figure AI',          category:'physicalai' },
+  { id:'UCpHvgBvMsQXUFBjTNBoCjBA', name:'Unitree Robotics',   category:'physicalai' },
+  // 모듈러·건축
+  { id:'UCwR9V4EYjB6sn9F0z9u3V2A', name:'Modular Building',   category:'modular'    },
+  { id:'UCgXAGe7XVa-U3x2A13E6GWg', name:'Construction Dive',  category:'modular'    },
+];
 
-function isRelevant(title, summary, category) {
-  const text = (title + ' ' + summary).toLowerCase();
-  return KEYWORDS[category].some(kw => text.includes(kw));
+// ── 카테고리 키워드 필터 ────────────────────────────────────────
+const KW = {
+  logistics:  ['amr','agv','shuttle','창고','물류','자동화','컨베이어','스태커','as/rs','warehouse','autonomous','forklift','intralogistics','셔틀','무인','피킹','소터','sorter','goods-to-person'],
+  physicalai: ['humanoid','휴머노이드','physical ai','피지컬','embodied','manipulation','dexterous','optimus','figure','unitree','boston dynamics','협동로봇','cobot','legged','bipedal','quadruped'],
+  modular:    ['modular','모듈러','prefab','조립식','건축','건설','osc','volumetric','off-site','공장제작','스마트 건설','mmc','클린룸','데이터센터'],
+};
+function isRelevant(title, summary, cat) {
+  const t = (title+' '+summary).toLowerCase();
+  return KW[cat].some(k => t.includes(k));
 }
 
-// ─── 목업 데이터 ─────────────────────────────────────────────
-const MOCK = [
-  { title: '현대차, AMR 기반 스마트 물류센터 본격 가동', summary: '현대자동차가 자율이동로봇(AMR) 200대를 투입한 스마트 물류센터를 울산에 개설했습니다. 4-Way 셔틀 시스템과 연계해 입출고 처리 속도를 기존 대비 3배 향상시켰습니다.', url: 'http://www.irobotnews.com', source: '로봇신문', category: 'logistics', publishedAt: new Date().toISOString() },
-  { title: 'CJ대한통운, AI 기반 창고 자동화 도입으로 피킹 오류 90% 감소', summary: 'CJ대한통운이 비전 AI 기반 자동화 피킹 시스템을 전국 15개 물류센터에 확대 적용했습니다. AS/RS(자동창고) 시스템과 연동해 운영 효율을 대폭 높였습니다.', url: 'http://www.klnews.co.kr', source: '물류신문', category: 'logistics', publishedAt: new Date(Date.now()-3600000).toISOString() },
-  { title: '보스턴 다이내믹스 아틀라스, 국내 자동차 공장 투입 시작', summary: '현대차그룹이 보스턴 다이내믹스의 휴머노이드 로봇 아틀라스를 국내 조립 공장에 시범 투입했습니다. 피지컬 AI 기술을 활용해 다양한 부품 조립 작업을 수행합니다.', url: 'http://www.irobotnews.com', source: '로봇신문', category: 'physicalai', publishedAt: new Date(Date.now()-7200000).toISOString() },
-  { title: 'Figure AI, 물류 창고용 휴머노이드 로봇 양산 계획 공개', summary: 'Figure AI가 BMW 공장 투입에 이어 물류 창고 전용 휴머노이드 로봇의 양산 로드맵을 공개했습니다. 2026년까지 1만 대 생산을 목표로 합니다.', url: 'https://techcrunch.com', source: 'TechCrunch', category: 'physicalai', publishedAt: new Date(Date.now()-10800000).toISOString() },
-  { title: '국내 모듈러 건축 시장, 2024년 1조원 돌파 전망', summary: '한국건설산업연구원은 국내 모듈러 건축 시장이 올해 처음으로 1조원을 넘을 것으로 전망했습니다. 공장 제작·현장 조립 방식이 공사 기간을 40% 단축시키는 효과가 있습니다.', url: 'http://www.cnews.co.kr', source: '건설경제신문', category: 'modular', publishedAt: new Date(Date.now()-14400000).toISOString() },
-  { title: '삼성물산, 모듈러 공법 적용 데이터센터 건설 발표', summary: '삼성물산이 경기도 안성에 모듈러 공법을 적용한 하이퍼스케일 데이터센터를 착공했습니다. 공장 사전 제작으로 공기를 18개월에서 11개월로 단축할 예정입니다.', url: 'https://www.constructiondive.com', source: '건설경제신문', category: 'modular', publishedAt: new Date(Date.now()-18000000).toISOString() },
+// ── 목업 데이터 ─────────────────────────────────────────────────
+const MOCK_NEWS = [
+  { title:'현대차, AMR 기반 스마트 물류센터 본격 가동', summary:'현대자동차가 자율이동로봇(AMR) 200대를 투입한 스마트 물류센터를 울산에 개설했습니다.\n\n4-Way 셔틀 시스템과 연계해 입출고 처리 속도를 기존 대비 3배 향상시켰으며, AI 기반 경로 최적화 알고리즘을 통해 로봇 간 충돌 없이 동시 다발적 이동이 가능합니다.\n\n2025년 말까지 전국 물류센터 5곳에 추가 도입할 예정입니다.', url:'http://www.irobotnews.com', source:'로봇신문', category:'logistics', publishedAt:new Date().toISOString() },
+  { title:'CJ대한통운, AI 창고자동화로 피킹 오류 90% 감소', summary:'CJ대한통운이 비전 AI 기반 자동화 피킹 시스템을 전국 15개 물류센터에 확대 적용했습니다.\n\nAS/RS(자동창고)와 연동된 소터 시스템이 시간당 3만 건의 아이템을 처리하며 오피킹률을 0.1% 이하로 낮췄습니다.\n\n연간 물류비 절감 효과는 약 450억 원에 달할 것으로 추산됩니다.', url:'http://www.klnews.co.kr', source:'물류신문', category:'logistics', publishedAt:new Date(Date.now()-3600000).toISOString() },
+  { title:'보스턴 다이내믹스 아틀라스, 국내 공장 투입 시작', summary:'현대차그룹이 보스턴 다이내믹스의 전동 휴머노이드 로봇 아틀라스를 국내 조립 공장에 시범 투입했습니다.\n\n피지컬 AI 기술을 활용해 다양한 형태의 부품을 파지하고 조립하는 작업을 수행하며, 기존 산업용 로봇으로 불가능했던 비정형 작업을 처리합니다.\n\n2026년 상반기 상용화를 목표로 하고 있습니다.', url:'http://www.irobotnews.com', source:'로봇신문', category:'physicalai', publishedAt:new Date(Date.now()-7200000).toISOString() },
+  { title:'Figure AI 02, 물류 창고 투입 영상 공개', summary:'Figure AI가 차세대 휴머노이드 로봇 Figure 02의 실제 물류 창고 작업 영상을 공개했습니다.\n\n양손으로 박스를 집어 컨베이어에 올리는 작업을 자율적으로 수행하며, 1시간당 처리 속도가 숙련 작업자 수준에 근접했습니다.\n\nBMW 공장에 이어 아마존 물류센터 파일럿 계약을 체결했다고 밝혔습니다.', url:'https://techcrunch.com', source:'TechCrunch', category:'physicalai', publishedAt:new Date(Date.now()-10800000).toISOString() },
+  { title:'국내 모듈러 건축 시장 2024년 1조원 돌파', summary:'한국건설산업연구원은 국내 모듈러 건축 시장이 올해 처음으로 1조원을 넘을 것으로 전망했습니다.\n\n공장 제작·현장 조립 방식(OSC)이 기존 공법 대비 공사 기간을 최대 40% 단축하고 건설 폐기물을 60% 줄이는 효과가 있습니다.\n\n데이터센터, 군 막사, 기숙사 등 반복 구조물을 중심으로 수요가 급증하고 있습니다.', url:'http://www.cnews.co.kr', source:'건설경제신문', category:'modular', publishedAt:new Date(Date.now()-14400000).toISOString() },
+  { title:'삼성물산, 모듈러 공법 데이터센터 착공', summary:'삼성물산이 경기도 안성에 모듈러 공법을 적용한 하이퍼스케일 데이터센터를 착공했습니다.\n\n공장에서 사전 제작한 모듈 유닛을 현장에서 조립하는 방식으로 공기를 18개월에서 11개월로 약 39% 단축할 예정입니다.\n\n냉각 시스템과 전력 설비까지 공장 탑재 후 반입하는 '풀-모듈 방식'을 국내 최초로 적용합니다.', url:'http://www.cnews.co.kr', source:'건설경제신문', category:'modular', publishedAt:new Date(Date.now()-18000000).toISOString() },
 ];
 
-let allNews = [];
-let currentCategory = 'all';
+// ── 상태 ────────────────────────────────────────────────────────
+let newsItems = [];
+let ytVideos  = [];
+let currentTab = 'all';
 
+// ── 유틸 ────────────────────────────────────────────────────────
 function formatDate(dateStr) {
   const diff = Date.now() - new Date(dateStr).getTime();
   const h = Math.floor(diff / 3600000);
-  if (h < 1) return '방금 전';
+  if (h < 1)  return '방금 전';
   if (h < 24) return h + '시간 전';
   const d = new Date(dateStr);
   return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
 }
-
 function stripHtml(html) {
-  return (html || '').replace(/<[^>]*>/g, '').replace(/&[a-z#0-9]+;/gi, ' ').replace(/\s+/g, ' ').trim();
+  return (html||'').replace(/<[^>]*>/g,'').replace(/&[a-z#0-9]+;/gi,' ').replace(/\s+/g,' ').trim();
+}
+// 핵심 2~3문장만 추출
+function shortSummary(text) {
+  const clean = stripHtml(text);
+  const parts = clean.split(/(?<=[.!?])\s+/);
+  const meaningful = parts.filter(s => s.length > 15);
+  return meaningful.slice(0,2).join(' ').slice(0,160) + (clean.length > 160 ? '...' : '');
+}
+// 상세 요약 (모달용) — 최대 5문장
+function longSummary(text) {
+  const clean = stripHtml(text);
+  const parts = clean.split(/(?<=[.!?])\s+/);
+  const meaningful = parts.filter(s => s.length > 15);
+  return meaningful.slice(0,5).join('\n\n') || clean.slice(0,500);
 }
 
 async function translate(text) {
-  if (!text || text.trim() === '') return text;
+  if (!text) return text;
   try {
-    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=ko&dt=t&q=${encodeURIComponent(text)}`;
-    const res = await fetch(url);
+    const res  = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=ko&dt=t&q=${encodeURIComponent(text)}`);
     const data = await res.json();
-    return data[0].map(s => s[0]).join('');
-  } catch {
-    return text;
-  }
+    return data[0].map(s=>s[0]).join('');
+  } catch { return text; }
 }
 
-// 핵심 내용만 2~3문장으로 압축
-function summarize(text) {
-  const clean = stripHtml(text);
-  const sentences = clean.split(/(?<=[.!?。])\s+/).filter(s => s.length > 20);
-  return sentences.slice(0, 3).join(' ').slice(0, 250) + (clean.length > 250 ? '...' : '');
+function setStatus(msg, loading=false) {
+  document.getElementById('statusText').textContent = msg;
+  document.getElementById('spinner').className = 'spinner' + (loading?' on':'');
 }
 
-function setStatus(text, loading = false) {
-  document.getElementById('statusText').textContent = text;
-  document.getElementById('spinner').className = 'status-spinner' + (loading ? ' visible' : '');
-}
+// ── 렌더 ────────────────────────────────────────────────────────
+const BADGE = {
+  logistics: ['badge-logistics','🚛 자동화 물류'],
+  physicalai:['badge-physicalai','🦾 피지컬 AI'],
+  modular:   ['badge-modular','🏗️ 모듈러·건축'],
+  youtube:   ['badge-youtube','▶ YouTube'],
+};
 
-function showSkeleton() {
-  document.getElementById('grid').innerHTML = Array.from({length: 6}).map(() => `
-    <div class="skeleton">
-      <div style="display:flex;justify-content:space-between;margin-bottom:10px">
-        <div class="skel" style="width:72px;height:20px;border-radius:999px;margin-bottom:0"></div>
-        <div class="skel" style="width:50px;height:14px;margin-bottom:0"></div>
-      </div>
-      <div class="skel" style="width:100%;height:15px"></div>
-      <div class="skel" style="width:80%;height:15px"></div>
-      <div class="skel" style="width:100%;height:11px"></div>
-      <div class="skel" style="width:100%;height:11px"></div>
-      <div class="skel" style="width:65%;height:11px"></div>
-    </div>`).join('');
-}
-
-function renderCards() {
-  const q = document.getElementById('searchInput').value.toLowerCase();
-  let items = currentCategory === 'all' ? allNews : allNews.filter(n => n.category === currentCategory);
-  if (q) items = items.filter(n =>
-    n.title.toLowerCase().includes(q) || (n.summary || '').toLowerCase().includes(q)
-  );
-
+function render() {
+  const q    = document.getElementById('searchInput').value.toLowerCase();
   const grid = document.getElementById('grid');
-  if (!items.length) {
-    grid.innerHTML = '<div class="empty"><div class="icon">📭</div><p>해당하는 기사가 없습니다</p></div>';
+
+  if (currentTab === 'youtube') {
+    let items = ytVideos;
+    if (q) items = items.filter(v => v.title.toLowerCase().includes(q));
+    if (!items.length) { grid.innerHTML = '<div class="empty"><div class="icon">📺</div><p>YouTube 영상을 불러오는 중입니다</p></div>'; return; }
+    grid.innerHTML = items.map(v => `
+      <a class="yt-card" href="${v.url}" target="_blank" rel="noopener noreferrer">
+        <div class="yt-thumb-wrap">
+          <img class="yt-thumb" src="${v.thumb}" alt="" loading="lazy" onerror="this.src='https://placehold.co/480x270/0f172a/94a3b8?text=YouTube'">
+          <div class="yt-play">▶</div>
+        </div>
+        <div class="yt-info">
+          <div class="yt-channel">${v.channel}</div>
+          <div class="yt-title">${v.title}</div>
+          <div class="yt-date">${formatDate(v.publishedAt)}</div>
+        </div>
+      </a>`).join('');
     return;
   }
 
-  const bClass = { logistics: 'badge-logistics', physicalai: 'badge-physicalai', modular: 'badge-modular' };
-  const bLabel = { logistics: '🚛 자동화 물류', physicalai: '🦾 피지컬 AI', modular: '🏗️ 모듈러·건축' };
+  let items = currentTab === 'all' ? newsItems : newsItems.filter(n => n.category === currentTab);
+  if (q) items = items.filter(n => n.title.toLowerCase().includes(q) || (n.summary||'').toLowerCase().includes(q));
 
-  grid.innerHTML = items.map(n => `
-    <div class="card">
+  if (!items.length) { grid.innerHTML = '<div class="empty"><div class="icon">📭</div><p>해당하는 기사가 없습니다</p></div>'; return; }
+
+  grid.innerHTML = items.map(n => {
+    const [bClass, bLabel] = BADGE[n.category]||['',''];
+    return `
+    <div class="card" onclick="openModal(${JSON.stringify(n).replace(/"/g,'&quot;')})">
       <div class="card-top">
-        <span class="badge ${bClass[n.category]}">${bLabel[n.category]}</span>
+        <span class="badge ${bClass}">${bLabel}</span>
         <span class="time">${formatDate(n.publishedAt)}</span>
       </div>
       <div class="card-title">${n.title}</div>
       <div class="card-divider"></div>
-      <div class="card-summary">${n.summary || '내용을 불러오는 중입니다.'}</div>
+      <div class="card-summary">${n.shortSummary||''}</div>
       <div class="card-footer">
         <div class="card-source">${n.source}</div>
-        ${n.url ? `<a class="card-link" href="${n.url}" target="_blank" rel="noopener noreferrer">원문 보기 →</a>` : ''}
+        <span class="card-hint">클릭해서 전체 보기 ›</span>
       </div>
+    </div>`;
+  }).join('');
+}
+
+function setTab(tab, btn) {
+  currentTab = tab;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+// ── 모달 ────────────────────────────────────────────────────────
+function openModal(n) {
+  const [bClass, bLabel] = BADGE[n.category]||['',''];
+  document.getElementById('modalBadge').className   = 'badge '+bClass;
+  document.getElementById('modalBadge').textContent  = bLabel;
+  document.getElementById('modalTime').textContent   = formatDate(n.publishedAt);
+  document.getElementById('modalTitle').textContent  = n.title;
+  document.getElementById('modalSummary').textContent= n.longSummary||n.shortSummary||'';
+  document.getElementById('modalSource').textContent = n.source;
+  document.getElementById('modalLink').href          = n.url||'#';
+  document.getElementById('modalBg').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(e) {
+  if (e && e.target !== document.getElementById('modalBg') && e.type==='click') return;
+  document.getElementById('modalBg').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
+
+// ── 스켈레톤 ─────────────────────────────────────────────────────
+function showSkeleton() {
+  document.getElementById('grid').innerHTML = Array.from({length:6}).map(()=>`
+    <div class="skeleton">
+      <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+        <div class="skel" style="width:80px;height:20px;border-radius:999px;margin-bottom:0"></div>
+        <div class="skel" style="width:50px;height:14px;margin-bottom:0"></div>
+      </div>
+      <div class="skel" style="width:100%;height:15px"></div>
+      <div class="skel" style="width:75%;height:15px"></div>
+      <div class="skel" style="height:1px;background:#f1f5f9;margin:10px 0"></div>
+      <div class="skel" style="width:100%;height:11px"></div>
+      <div class="skel" style="width:90%;height:11px"></div>
+      <div class="skel" style="width:65%;height:11px"></div>
     </div>`).join('');
 }
 
-function setCategory(cat, btn) {
-  currentCategory = cat;
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  renderCards();
+// ── YouTube 채널 RSS 가져오기 ────────────────────────────────────
+function extractVideoId(url) {
+  const m = (url||'').match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+  return m ? m[1] : null;
 }
-
-async function fetchFeed(feed) {
-  const res = await fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feed.url));
+async function fetchYtChannel(ch) {
+  const rss = `https://www.youtube.com/feeds/videos.xml?channel_id=${ch.id}`;
+  const res  = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rss)}`);
   const data = await res.json();
   if (data.status !== 'ok') return [];
-  return (data.items || []).slice(0, 12)
-    .map((item, i) => {
-      const rawTitle   = item.title || '';
-      const rawSummary = summarize(item.description || item.content || '');
+  return (data.items||[]).slice(0,6).map(item => {
+    const vid = extractVideoId(item.link);
+    return {
+      title:       item.title||'',
+      url:         item.link||'',
+      channel:     ch.name,
+      category:    ch.category,
+      publishedAt: item.pubDate||new Date().toISOString(),
+      thumb:       vid ? `https://img.youtube.com/vi/${vid}/mqdefault.jpg` : '',
+    };
+  });
+}
+
+// ── 뉴스 RSS 가져오기 ────────────────────────────────────────────
+async function fetchNews(feed) {
+  const res  = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}`);
+  const data = await res.json();
+  if (data.status !== 'ok') return [];
+  return (data.items||[]).slice(0,10)
+    .map((item,i) => {
+      const rawTitle   = item.title||'';
+      const rawFull    = stripHtml(item.description||item.content||'');
       return {
-        id: feed.source + i + (item.pubDate || ''),
+        id:          feed.source+i+(item.pubDate||''),
         title:       rawTitle,
-        summary:     rawSummary,
-        url:         item.link || '',
+        shortSummary: shortSummary(item.description||item.content||''),
+        longSummary:  longSummary(item.description||item.content||''),
+        url:         item.link||'',
         source:      feed.source,
         category:    feed.category,
         lang:        feed.lang,
-        publishedAt: item.pubDate || new Date().toISOString(),
-        translated:  feed.lang === 'ko',
+        publishedAt: item.pubDate||new Date().toISOString(),
+        translated:  feed.lang==='ko',
       };
     })
-    .filter(item => isRelevant(item.title, item.summary, item.category));
+    .filter(n => isRelevant(n.title, n.shortSummary, n.category));
 }
 
+// ── 번역 배치 ────────────────────────────────────────────────────
 async function translateBatch(items) {
-  const toTranslate = items.filter(n => !n.translated);
-  const BATCH = 4;
-  for (let i = 0; i < toTranslate.length; i += BATCH) {
-    await Promise.all(toTranslate.slice(i, i + BATCH).map(async item => {
-      const [title, summary] = await Promise.all([
-        translate(item.title),
-        translate(item.summary),
-      ]);
-      item.title     = title;
-      item.summary   = summary;
-      item.translated = true;
+  const todo = items.filter(n=>!n.translated);
+  for (let i=0; i<todo.length; i+=4) {
+    await Promise.all(todo.slice(i,i+4).map(async n=>{
+      const [t,s,l] = await Promise.all([translate(n.title), translate(n.shortSummary), translate(n.longSummary)]);
+      n.title=t; n.shortSummary=s; n.longSummary=l; n.translated=true;
     }));
-    renderCards();
-    setStatus(`번역 중... (${Math.min(i + BATCH, toTranslate.length)}/${toTranslate.length})`, true);
+    render();
+    setStatus(`번역 중... (${Math.min(i+4,todo.length)}/${todo.length})`,true);
   }
 }
 
-async function loadNews(force = false) {
-  const KEY_DATA = 'industry_news_v3';
-  const KEY_TIME = 'industry_news_ts_v3';
-  const TTL = 30 * 60 * 1000;
+// ── 메인 로딩 ────────────────────────────────────────────────────
+async function loadAll(force=false) {
+  const KEY_NEWS='ind_news_v4', KEY_YT='ind_yt_v4', KEY_TS='ind_ts_v4';
+  const TTL = 30*60*1000;
 
   if (!force) {
-    const cached = localStorage.getItem(KEY_DATA);
-    const ts     = parseInt(localStorage.getItem(KEY_TIME) || '0');
-    if (cached && Date.now() - ts < TTL) {
-      allNews = JSON.parse(cached);
-      renderCards();
-      setStatus(`마지막 업데이트: ${new Date(ts).toLocaleString('ko-KR')} · ${allNews.length}개 기사 (캐시)`);
-      return;
+    const ts = parseInt(localStorage.getItem(KEY_TS)||'0');
+    if (Date.now()-ts < TTL) {
+      const cn = localStorage.getItem(KEY_NEWS);
+      const cy = localStorage.getItem(KEY_YT);
+      if (cn) { newsItems=JSON.parse(cn); ytVideos=JSON.parse(cy||'[]'); render(); setStatus(`마지막 업데이트: ${new Date(ts).toLocaleString('ko-KR')} · ${newsItems.length}개 기사 (캐시)`); return; }
     }
   }
 
   showSkeleton();
   setStatus('뉴스 수집 중...', true);
 
-  const results = await Promise.allSettled(FEEDS.map(fetchFeed));
-  let fetched = results.flatMap(r => r.status === 'fulfilled' ? r.value : []);
+  // 뉴스 & 유튜브 병렬 수집
+  const [newsResults, ytResults] = await Promise.all([
+    Promise.allSettled(NEWS_FEEDS.map(fetchNews)),
+    Promise.allSettled(YT_CHANNELS.map(fetchYtChannel)),
+  ]);
 
-  // 중복 제거 (같은 제목)
-  const seen = new Set();
-  fetched = fetched.filter(n => {
-    const key = n.title.slice(0, 30);
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
+  let fetched = newsResults.flatMap(r=>r.status==='fulfilled'?r.value:[]);
+  // 중복 제거
+  const seen=new Set();
+  fetched = fetched.filter(n=>{ const k=n.title.slice(0,30); if(seen.has(k))return false; seen.add(k); return true; });
 
-  if (fetched.length > 0) {
-    allNews = fetched.sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt));
-  } else {
-    allNews = MOCK;
-    renderCards();
-    setStatus(`샘플 데이터 표시 중 (네트워크 확인 필요) · ${allNews.length}개 기사`);
-    return;
-  }
+  newsItems = fetched.length>0
+    ? fetched.sort((a,b)=>new Date(b.publishedAt)-new Date(a.publishedAt))
+    : MOCK_NEWS;
 
-  renderCards();
-  setStatus(`번역 중... · ${allNews.length}개 기사`, true);
-  await translateBatch(allNews);
+  ytVideos = ytResults.flatMap(r=>r.status==='fulfilled'?r.value:[])
+    .sort((a,b)=>new Date(b.publishedAt)-new Date(a.publishedAt));
 
-  localStorage.setItem(KEY_DATA, JSON.stringify(allNews));
-  localStorage.setItem(KEY_TIME, Date.now().toString());
-  setStatus(`마지막 업데이트: ${new Date().toLocaleString('ko-KR')} · ${allNews.length}개 기사`);
+  render();
+  setStatus(`번역 중... · ${newsItems.length}개 기사`, true);
+
+  if (fetched.length>0) await translateBatch(newsItems);
+
+  localStorage.setItem(KEY_NEWS, JSON.stringify(newsItems));
+  localStorage.setItem(KEY_YT,   JSON.stringify(ytVideos));
+  localStorage.setItem(KEY_TS,   Date.now().toString());
+  setStatus(`마지막 업데이트: ${new Date().toLocaleString('ko-KR')} · ${newsItems.length}개 기사 · YouTube ${ytVideos.length}개`);
 }
 
-loadNews();
+loadAll();
 </script>
 </body>
 </html>
