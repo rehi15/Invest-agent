@@ -3,13 +3,13 @@ import { useEffect, useState, useCallback } from 'react';
 import { NewsItem } from '@/lib/newsService';
 import NewsCard from './NewsCard';
 
-type Category = 'all' | 'ai' | 'logistics' | 'automation';
+type Category = 'all' | 'logistics' | 'physicalai' | 'modular';
 
 const CATEGORIES: { key: Category; label: string; icon: string }[] = [
   { key: 'all', label: '전체', icon: '📰' },
-  { key: 'ai', label: 'AI', icon: '🤖' },
-  { key: 'logistics', label: '물류', icon: '🚚' },
-  { key: 'automation', label: '자동화', icon: '⚙️' },
+  { key: 'logistics', label: '자동화 물류', icon: '🚚' },
+  { key: 'physicalai', label: '피지컬 AI', icon: '🤖' },
+  { key: 'modular', label: '모듈러·건축', icon: '🏗️' },
 ];
 
 export default function NewsFeed() {

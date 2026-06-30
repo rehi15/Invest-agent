@@ -1,4 +1,5 @@
 import Parser from 'rss-parser';
+import { summarizeArticle } from './summarize';
 
 export interface NewsItem {
   id: string;
@@ -6,7 +7,7 @@ export interface NewsItem {
   summary: string;
   url: string;
   source: string;
-  category: 'ai' | 'logistics' | 'automation';
+  category: 'logistics' | 'physicalai' | 'modular';
   publishedAt: string;
   imageUrl?: string;
 }
@@ -17,38 +18,33 @@ const parser = new Parser({
   },
 });
 
-const RSS_FEEDS: { url: string; source: string; category: NewsItem['category'] }[] = [
-  {
-    url: 'https://feeds.feedburner.com/venturebeat/SZYF',
-    source: 'VentureBeat AI',
-    category: 'ai',
-  },
-  {
-    url: 'https://www.technologyreview.com/feed/',
-    source: 'MIT Tech Review',
-    category: 'ai',
-  },
-  {
-    url: 'https://techcrunch.com/category/artificial-intelligence/feed/',
-    source: 'TechCrunch AI',
-    category: 'ai',
-  },
-  {
-    url: 'https://www.supplychaindive.com/feeds/news/',
-    source: 'Supply Chain Dive',
-    category: 'logistics',
-  },
-  {
-    url: 'https://www.logisticsmgmt.com/rss/news',
-    source: 'Logistics Management',
-    category: 'logistics',
-  },
-  {
-    url: 'https://www.automationworld.com/rss.xml',
-    source: 'Automation World',
-    category: 'automation',
-  },
+const RSS_FEEDS: { url: string; source: string; category: NewsItem['category']; lang: 'ko' | 'en' }[] = [
+  // 자동화 물류 (AMR, 4-Way Shuttle 등)
+  { url: 'http://www.irobotnews.com/rss/allArticle.xml', source: '로봇신문', category: 'logistics', lang: 'ko' },
+  { url: 'http://www.klnews.co.kr/rss/allArticle.xml', source: '물류신문', category: 'logistics', lang: 'ko' },
+  { url: 'https://rss.etnews.com/Section901.xml', source: '전자신문 로봇', category: 'logistics', lang: 'ko' },
+  { url: 'https://www.automationworld.com/rss.xml', source: 'Automation World', category: 'logistics', lang: 'en' },
+  { url: 'https://www.mhlnews.com/rss/all', source: 'MH&L News', category: 'logistics', lang: 'en' },
+  // 피지컬 AI (휴머노이드, embodied AI)
+  { url: 'http://www.irobotnews.com/rss/allArticle.xml', source: '로봇신문(AI)', category: 'physicalai', lang: 'ko' },
+  { url: 'https://rss.etnews.com/Section901.xml', source: '전자신문 AI로봇', category: 'physicalai', lang: 'ko' },
+  { url: 'https://techcrunch.com/tag/robotics/feed/', source: 'TechCrunch 로보틱스', category: 'physicalai', lang: 'en' },
+  { url: 'https://feeds.feedburner.com/IEEESpectrumRobotics', source: 'IEEE Spectrum', category: 'physicalai', lang: 'en' },
+  // 모듈러 설비 / 건축
+  { url: 'http://www.cnews.co.kr/rss/allArticle.xml', source: '건설경제신문', category: 'modular', lang: 'ko' },
+  { url: 'https://www.constructiondive.com/feeds/news/', source: 'Construction Dive', category: 'modular', lang: 'en' },
 ];
+
+const KEYWORDS: Record<NewsItem['category'], string[]> = {
+  logistics: ['amr', '4-way', '4way', '셔틀', 'shuttle', '물류', '자동화', '창고', '피킹', 'asrs', 'as/rs', '무인운반', 'agv', 'sorter', '소터'],
+  physicalai: ['피지컬 ai', 'physical ai', '휴머노이드', 'humanoid', '로봇', 'robot', 'embodied', '보스턴 다이내믹스', 'figure', 'unitree'],
+  modular: ['모듈러', 'modular', '건축', '건설', 'osc', '데이터센터', 'construction', 'prefab'],
+};
+
+function isRelevant(title: string, summary: string, category: NewsItem['category']): boolean {
+  const t = (title + ' ' + summary).toLowerCase();
+  return KEYWORDS[category].some((kw) => t.includes(kw));
+}
 
 function extractImage(item: Record<string, unknown>): string | undefined {
   const mediaContent = item['media:content'] as Record<string, unknown> | undefined;
@@ -81,21 +77,35 @@ export async function fetchNewsFromRSS(): Promise<NewsItem[]> {
         const items = (parsed.items || []).slice(0, 10).map((item, idx) => ({
           id: `${feed.source}-${idx}-${Date.now()}`,
           title: item.title || '',
-          summary: stripHtml(item.contentSnippet || item.summary || item.content || '').slice(0, 200),
+          summary: stripHtml(item.contentSnippet || item.summary || item.content || '').slice(0, 500),
           url: item.link || '',
           source: feed.source,
           category: feed.category,
           publishedAt: item.pubDate || item.isoDate || new Date().toISOString(),
           imageUrl: extractImage(item as unknown as Record<string, unknown>),
         }));
-        results.push(...items);
+        results.push(...items.filter((n) => isRelevant(n.title, n.summary, feed.category)));
       } catch {
         // feed unavailable, skip silently
       }
     })
   );
 
-  return results.sort(
+  const deduped = Array.from(new Map(results.map((n) => [n.title.slice(0, 30), n])).values());
+
+  // 본문을 가져와서 Claude로 실제 요약 생성 (실패 시 RSS 발췌로 폴백)
+  const summarized = await Promise.all(
+    deduped.map(async (n) => {
+      try {
+        const summary = await summarizeArticle(n.title, n.url, n.summary);
+        return { ...n, summary };
+      } catch {
+        return n;
+      }
+    })
+  );
+
+  return summarized.sort(
     (a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
   );
 }
@@ -104,57 +114,30 @@ export function getMockNews(): NewsItem[] {
   return [
     {
       id: 'mock-1',
-      title: 'OpenAI, 물류 최적화 AI 모델 출시 — 배송 시간 30% 단축 효과',
-      summary: 'OpenAI가 공급망 및 물류 최적화에 특화된 새로운 AI 모델을 공개했습니다. 이 모델은 실시간 교통 데이터와 수요 예측을 결합해 배송 경로를 최적화합니다.',
+      title: '현대차, AMR 기반 스마트 물류센터 본격 가동',
+      summary: '현대자동차가 자율이동로봇(AMR) 200대를 투입한 스마트 물류센터를 울산에 개설했습니다. 4-Way 셔틀 시스템과 연계해 입출고 처리 속도를 기존 대비 3배 향상시켰습니다.',
       url: '#',
-      source: 'AI News Korea',
-      category: 'ai',
+      source: '로봇신문',
+      category: 'logistics',
       publishedAt: new Date().toISOString(),
     },
     {
       id: 'mock-2',
-      title: '아마존 물류센터, 자율주행 로봇 도입으로 피킹 효율 45% 향상',
-      summary: '아마존이 최신 자율주행 로봇을 전국 물류센터에 배치하며 운영 효율성을 크게 높였습니다. AI 기반 경로 계획 알고리즘이 핵심입니다.',
+      title: '보스턴 다이내믹스 아틀라스, 국내 공장 투입 시작',
+      summary: '현대차그룹이 보스턴 다이내믹스의 전동 휴머노이드 로봇 아틀라스를 국내 조립 공장에 시범 투입했습니다. 피지컬 AI 기술로 비정형 작업을 처리합니다.',
       url: '#',
-      source: 'Logistics Tech',
-      category: 'logistics',
+      source: '로봇신문',
+      category: 'physicalai',
       publishedAt: new Date(Date.now() - 3600000).toISOString(),
     },
     {
       id: 'mock-3',
-      title: '제조 자동화 시장 2030년까지 연평균 9.8% 성장 전망',
-      summary: '글로벌 리서치 기관이 발표한 보고서에 따르면 AI 기반 제조 자동화 시장이 폭발적으로 성장하고 있으며, 특히 한국과 일본 시장이 두드러집니다.',
+      title: '국내 모듈러 건축 시장 2024년 1조원 돌파',
+      summary: '한국건설산업연구원은 국내 모듈러 건축 시장이 올해 처음으로 1조원을 넘을 것으로 전망했습니다. 공사 기간을 최대 40% 단축하는 효과가 있습니다.',
       url: '#',
-      source: 'Automation World',
-      category: 'automation',
+      source: '건설경제신문',
+      category: 'modular',
       publishedAt: new Date(Date.now() - 7200000).toISOString(),
-    },
-    {
-      id: 'mock-4',
-      title: 'Google DeepMind, 창고 자동화를 위한 범용 로봇 AI 공개',
-      summary: 'DeepMind의 새 로봇 AI는 다양한 물체를 인식하고 분류하는 데 있어 인간 수준의 정확도를 달성했다고 밝혔습니다.',
-      url: '#',
-      source: 'MIT Tech Review',
-      category: 'ai',
-      publishedAt: new Date(Date.now() - 10800000).toISOString(),
-    },
-    {
-      id: 'mock-5',
-      title: '현대자동차, AI 기반 스마트 물류 플랫폼 "H-Logistics" 론칭',
-      summary: '현대자동차그룹이 자체 개발한 AI 물류 플랫폼을 공개하며 부품 조달부터 완성차 배송까지 전 과정을 디지털화한다고 발표했습니다.',
-      url: '#',
-      source: 'Supply Chain Dive',
-      category: 'logistics',
-      publishedAt: new Date(Date.now() - 14400000).toISOString(),
-    },
-    {
-      id: 'mock-6',
-      title: '드론 배송 자동화, 규제 완화로 국내 상용화 앞당겨질 전망',
-      summary: '국토교통부가 도심 드론 배송 관련 규제를 대폭 완화하면서 CJ대한통운, 우체국 등이 본격적인 서비스 확대를 준비 중입니다.',
-      url: '#',
-      source: 'Logistics Management',
-      category: 'automation',
-      publishedAt: new Date(Date.now() - 18000000).toISOString(),
     },
   ];
 }

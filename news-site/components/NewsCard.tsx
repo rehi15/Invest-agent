@@ -2,9 +2,9 @@
 import { NewsItem } from '@/lib/newsService';
 
 const categoryLabel: Record<string, { label: string; color: string }> = {
-  ai: { label: 'AI', color: 'bg-violet-500/20 text-violet-300 border border-violet-500/30' },
-  logistics: { label: '물류', color: 'bg-blue-500/20 text-blue-300 border border-blue-500/30' },
-  automation: { label: '자동화', color: 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' },
+  logistics: { label: '자동화 물류', color: 'bg-blue-500/20 text-blue-300 border border-blue-500/30' },
+  physicalai: { label: '피지컬 AI', color: 'bg-violet-500/20 text-violet-300 border border-violet-500/30' },
+  modular: { label: '모듈러·건축', color: 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' },
 };
 
 function timeAgo(dateStr: string): string {
