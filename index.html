@@ -605,7 +605,7 @@ async function loadAll(force=false) {
 
   newsItems = fetched.length>0
     ? fetched.sort((a,b)=>new Date(b.publishedAt)-new Date(a.publishedAt))
-    : MOCK_NEWS;
+    : MOCK_NEWS.map(m => ({ ...m, shortSummary: shortSummary(m.summary), longSummary: longSummary(m.summary), translated: true }));
 
   ytVideos = ytResults.flatMap(r=>r.status==='fulfilled'?r.value:[])
     .sort((a,b)=>new Date(b.publishedAt)-new Date(a.publishedAt));
