@@ -296,7 +296,7 @@ const MOCK_NEWS = [
   { title:'보스턴 다이내믹스 아틀라스, 국내 공장 투입 시작', summary:'현대차그룹이 보스턴 다이내믹스의 전동 휴머노이드 로봇 아틀라스를 국내 조립 공장에 시범 투입했습니다.\n\n피지컬 AI 기술을 활용해 다양한 형태의 부품을 파지하고 조립하는 작업을 수행하며, 기존 산업용 로봇으로 불가능했던 비정형 작업을 처리합니다.\n\n2026년 상반기 상용화를 목표로 하고 있습니다.', url:'http://www.irobotnews.com', source:'로봇신문', category:'physicalai', publishedAt:new Date(Date.now()-7200000).toISOString() },
   { title:'Figure AI 02, 물류 창고 투입 영상 공개', summary:'Figure AI가 차세대 휴머노이드 로봇 Figure 02의 실제 물류 창고 작업 영상을 공개했습니다.\n\n양손으로 박스를 집어 컨베이어에 올리는 작업을 자율적으로 수행하며, 1시간당 처리 속도가 숙련 작업자 수준에 근접했습니다.\n\nBMW 공장에 이어 아마존 물류센터 파일럿 계약을 체결했다고 밝혔습니다.', url:'https://techcrunch.com', source:'TechCrunch', category:'physicalai', publishedAt:new Date(Date.now()-10800000).toISOString() },
   { title:'국내 모듈러 건축 시장 2024년 1조원 돌파', summary:'한국건설산업연구원은 국내 모듈러 건축 시장이 올해 처음으로 1조원을 넘을 것으로 전망했습니다.\n\n공장 제작·현장 조립 방식(OSC)이 기존 공법 대비 공사 기간을 최대 40% 단축하고 건설 폐기물을 60% 줄이는 효과가 있습니다.\n\n데이터센터, 군 막사, 기숙사 등 반복 구조물을 중심으로 수요가 급증하고 있습니다.', url:'http://www.cnews.co.kr', source:'건설경제신문', category:'modular', publishedAt:new Date(Date.now()-14400000).toISOString() },
-  { title:'삼성물산, 모듈러 공법 데이터센터 착공', summary:'삼성물산이 경기도 안성에 모듈러 공법을 적용한 하이퍼스케일 데이터센터를 착공했습니다.\n\n공장에서 사전 제작한 모듈 유닛을 현장에서 조립하는 방식으로 공기를 18개월에서 11개월로 약 39% 단축할 예정입니다.\n\n냉각 시스템과 전력 설비까지 공장 탑재 후 반입하는 '풀-모듈 방식'을 국내 최초로 적용합니다.', url:'http://www.cnews.co.kr', source:'건설경제신문', category:'modular', publishedAt:new Date(Date.now()-18000000).toISOString() },
+  { title:'삼성물산, 모듈러 공법 데이터센터 착공', summary:'삼성물산이 경기도 안성에 모듈러 공법을 적용한 하이퍼스케일 데이터센터를 착공했습니다.\n\n공장에서 사전 제작한 모듈 유닛을 현장에서 조립하는 방식으로 공기를 18개월에서 11개월로 약 39% 단축할 예정입니다.\n\n냉각 시스템과 전력 설비까지 공장 탑재 후 반입하는 풀-모듈 방식을 국내 최초로 적용합니다.', url:'http://www.cnews.co.kr', source:'건설경제신문', category:'modular', publishedAt:new Date(Date.now()-18000000).toISOString() },
 ];
 
 // ── 상태 ────────────────────────────────────────────────────────
@@ -334,10 +334,9 @@ function longSummary(text) {
 async function translate(text) {
   if (!text) return text;
   try {
-    const res  = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=ko&dt=t&q=${encodeURIComponent(text)}`);
-    const data = await res.json();
+    const data = await fetchWithTimeout(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=ko&dt=t&q=${encodeURIComponent(text)}`, 6000);
     return data[0].map(s=>s[0]).join('');
-  } catch { return text; }
+  } catch (err) { console.warn('[translate failed]', err.message); return text; }
 }
 
 function setStatus(msg, loading=false) {
@@ -444,6 +443,18 @@ function showSkeleton() {
     </div>`).join('');
 }
 
+// ── 타임아웃 포함 fetch (프록시가 응답 없이 멈추는 것 방지) ────────
+async function fetchWithTimeout(url, ms = 8000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), ms);
+  try {
+    const res = await fetch(url, { signal: controller.signal });
+    return await res.json();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
 // ── YouTube 채널 RSS 가져오기 ────────────────────────────────────
 function extractVideoId(url) {
   const m = (url||'').match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
@@ -451,9 +462,14 @@ function extractVideoId(url) {
 }
 async function fetchYtChannel(ch) {
   const rss = `https://www.youtube.com/feeds/videos.xml?channel_id=${ch.id}`;
-  const res  = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rss)}`);
-  const data = await res.json();
-  if (data.status !== 'ok') return [];
+  let data;
+  try {
+    data = await fetchWithTimeout(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rss)}`);
+  } catch (err) {
+    console.warn('[YouTube fetch failed]', ch.name, err.message);
+    return [];
+  }
+  if (data.status !== 'ok') { console.warn('[YouTube feed error]', ch.name, data.message); return []; }
   return (data.items||[]).slice(0,6).map(item => {
     const vid = extractVideoId(item.link);
     return {
@@ -469,9 +485,14 @@ async function fetchYtChannel(ch) {
 
 // ── 뉴스 RSS 가져오기 ────────────────────────────────────────────
 async function fetchNews(feed) {
-  const res  = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}`);
-  const data = await res.json();
-  if (data.status !== 'ok') return [];
+  let data;
+  try {
+    data = await fetchWithTimeout(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}`);
+  } catch (err) {
+    console.warn('[News fetch failed]', feed.source, err.message);
+    return [];
+  }
+  if (data.status !== 'ok') { console.warn('[News feed error]', feed.source, data.message); return []; }
   return (data.items||[]).slice(0,10)
     .map((item,i) => {
       const rawTitle   = item.title||'';
