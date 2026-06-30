@@ -411,7 +411,9 @@ function setTab(tab, btn) {
 }
 
 // ── 모달 ────────────────────────────────────────────────────────
+let modalToken = 0;
 function openModal(n) {
+  const myToken = ++modalToken;
   const [bClass, bLabel] = BADGE[n.category]||['',''];
   document.getElementById('modalBadge').className   = 'badge '+bClass;
   document.getElementById('modalBadge').textContent  = bLabel;
@@ -422,6 +424,38 @@ function openModal(n) {
   document.getElementById('modalLink').href          = n.url||'#';
   document.getElementById('modalBg').classList.add('open');
   document.body.style.overflow = 'hidden';
+
+  if (n.url) loadFullArticleSummary(n, myToken);
+}
+
+// 기사 원문 페이지를 직접 가져와 다시 요약 (RSS 발췌가 아닌 본문 기준)
+async function loadFullArticleSummary(n, myToken) {
+  const summaryEl = document.getElementById('modalSummary');
+  const prevText = summaryEl.textContent;
+  summaryEl.textContent = prevText + '\n\n(원문을 다시 불러와 요약하는 중...)';
+  try {
+    const text = await fetchTextWithTimeout(`https://r.jina.ai/${n.url}`, 12000);
+    if (myToken !== modalToken) return; // 모달이 이미 다른 기사로 바뀜
+    let article = stripHtml(text)
+      .replace(/Title:|URL Source:|Markdown Content:/g, ' ')
+      .trim();
+    if (article.length < 80) throw new Error('extracted article too short');
+    let summary = summarizeArticle(article);
+    if (n.lang !== 'ko') summary = await translate(summary);
+    if (myToken !== modalToken) return;
+    summaryEl.textContent = summary;
+  } catch (err) {
+    console.warn('[full article fetch failed]', n.url, err.message);
+    if (myToken !== modalToken) return;
+    summaryEl.textContent = prevText; // 실패 시 기존 RSS 요약 유지
+  }
+}
+
+// 본문 텍스트에서 핵심 문장을 추출해 다시 요약
+function summarizeArticle(text) {
+  const { sentences } = splitSentences(text);
+  if (!sentences.length) return text.slice(0, 600);
+  return sentences.slice(0, 8).join('\n\n');
 }
 function closeModal(e) {
   if (e && e.target !== document.getElementById('modalBg') && e.type==='click') return;
@@ -454,6 +488,16 @@ async function fetchWithTimeout(url, ms = 8000) {
   try {
     const res = await fetch(url, { signal: controller.signal });
     return await res.json();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+async function fetchTextWithTimeout(url, ms = 8000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), ms);
+  try {
+    const res = await fetch(url, { signal: controller.signal });
+    return await res.text();
   } finally {
     clearTimeout(timer);
   }
