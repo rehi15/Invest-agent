@@ -316,19 +316,23 @@ function formatDate(dateStr) {
 function stripHtml(html) {
   return (html||'').replace(/<[^>]*>/g,'').replace(/&[a-z#0-9]+;/gi,' ').replace(/\s+/g,' ').trim();
 }
-// 핵심 2~3문장만 추출
-function shortSummary(text) {
+function splitSentences(text) {
   const clean = stripHtml(text);
   const parts = clean.split(/(?<=[.!?])\s+/);
-  const meaningful = parts.filter(s => s.length > 15);
-  return meaningful.slice(0,2).join(' ').slice(0,160) + (clean.length > 160 ? '...' : '');
+  return { clean, sentences: parts.filter(s => s.length > 10) };
 }
-// 상세 요약 (모달용) — 최대 5문장
+// 핵심 2문장만 추출 (문장 경계에서만 자름, 중간에 안 짤림)
+function shortSummary(text) {
+  const { clean, sentences } = splitSentences(text);
+  if (!sentences.length) return clean;
+  const picked = sentences.slice(0, 2).join(' ');
+  return picked + (sentences.length > 2 ? '...' : '');
+}
+// 상세 요약 (모달용) — 가능한 모든 문장 사용
 function longSummary(text) {
-  const clean = stripHtml(text);
-  const parts = clean.split(/(?<=[.!?])\s+/);
-  const meaningful = parts.filter(s => s.length > 15);
-  return meaningful.slice(0,5).join('\n\n') || clean.slice(0,500);
+  const { clean, sentences } = splitSentences(text);
+  if (!sentences.length) return clean;
+  return sentences.join('\n\n');
 }
 
 async function translate(text) {
@@ -496,12 +500,13 @@ async function fetchNews(feed) {
   return (data.items||[]).slice(0,10)
     .map((item,i) => {
       const rawTitle   = item.title||'';
-      const rawFull    = stripHtml(item.description||item.content||'');
+      const rawFull    = item.content && item.content.length > (item.description||'').length
+        ? item.content : (item.description||item.content||'');
       return {
         id:          feed.source+i+(item.pubDate||''),
         title:       rawTitle,
-        shortSummary: shortSummary(item.description||item.content||''),
-        longSummary:  longSummary(item.description||item.content||''),
+        shortSummary: shortSummary(rawFull),
+        longSummary:  longSummary(rawFull),
         url:         item.link||'',
         source:      feed.source,
         category:    feed.category,
